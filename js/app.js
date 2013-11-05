@@ -94,7 +94,7 @@ var app = (function() {
 
     // load map and points
     DataLoader.loadData(Files.mapFile, Map.parseJsonData);
-    
+
   };
 
   var Files =  {
@@ -123,10 +123,10 @@ var app = (function() {
       this.graphs = {};
 
       var peopleCategories = [
-        ['Heimatland', this.loadNations, Files.nationsFile],
-        ['Heimatkontinent', this.loadContinents, Files.nationsFile],
-        ['Alter', this.loadAge, Files.ageFile],
-        ['Konfession', this.loadConfessions, Files.confessionFile]
+        ['Heimatland',      this.loadNations,     Files.nationsFile],
+        ['Heimatkontinent', this.loadContinents,  Files.nationsFile],
+        ['Alter',           this.loadAge,         Files.ageFile],
+        ['Konfession',      this.loadConfessions, Files.confessionFile]
       ];
 
       $.each(peopleCategories, function(i, el) {
@@ -141,7 +141,7 @@ var app = (function() {
       });
 
       UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
-      
+
     },
 
     loadNations: function(data) {
@@ -157,9 +157,8 @@ var app = (function() {
     },
 
     loadConfessions: function(data) {
-      People.parseCsvData(data);
-      console.log(Data.parsedData);
-      People.filterData('Konfessiongruppiert2lang', 'sortedConfession');
+      People.parseCsvData(data, true);
+      People.filterData('Konfessiongruppiert2lang', 'sortedConfession', null, 'AnzahlPersonen');
       UI.drawGraph('sortedConfession', 200);
     },
 
@@ -226,23 +225,22 @@ var app = (function() {
 
     handlesortedContinent: function(evt) {
       var continent = evt.currentTarget.textContent;
-      console.log(evt.currentTarget.textContent);
-
       People.filterContinents(continent);
     },
 
     handlesortedCountry: function(evt) {
       var country = evt.currentTarget.textContent;
-      console.log(evt.currentTarget.textContent);
-
       People.filterCountries(country);
     },
 
     handlesortedAge: function(evt) {
       var age = evt.currentTarget.textContent;
-      console.log(evt.currentTarget.textContent);
-
       People.filterAge(age);
+    },
+
+    handlesortedConfession: function(evt) {
+      var confession = evt.currentTarget.textContent;
+      People.filterConfessions(confession);
     }
 
   }
@@ -278,7 +276,7 @@ var app = (function() {
      *
      * @param  {String} data comma separated string
      */
-    parseCsvData: function(data) {
+    parseCsvData: function(data, isSpecialCase) {
 
       this.lines = data.split(/\r\n|\n/);
       this.propertyNames = this.lines[0].split(',');
@@ -292,7 +290,15 @@ var app = (function() {
 
       for (var i = 0; i < this.lines.length; i++) {
         var line = this.lines[i];
-        var cells = line.split("\",");
+        var cells = '';
+
+        if (typeof isSpecialCase !== undefined) {
+          cells = line.split(",");
+        }
+        else {
+          cells = line.split("\",");
+        }
+
         var lineObj = {};
 
         // we don’t need the first line, because these are just the table headers
@@ -308,14 +314,15 @@ var app = (function() {
       }
 
       Data.parsedData = this.parsedData;
-    
+
     },
 
     /**
      * Refine data to contain only the objects we really need for the graphics
      */
-    filterData: function(filterBy, sortKey, exclude) {
-      
+    filterData: function(filterBy, sortKey, exclude, amountsColumnName) {
+
+      amountsColumnName = typeof amountsColumnName !== undefined ? amountsColumnName : 'wirtschaftlicheBevlkerung';
       var filteredData =  Data.parsedData;
 
       if (exclude != undefined) {
@@ -330,7 +337,7 @@ var app = (function() {
       var formattedData = groupedData.map( function(el, i) {
         return new Array(
           el[0][filterBy],
-          Helper.countAmounts(el, 'wirtschaftlicheBevlkerung')
+          Helper.countAmounts(el, amountsColumnName)
         );
       }, this);
 
@@ -349,7 +356,7 @@ var app = (function() {
       var continentsOnly = Data.parsedData.filter( function(el, i) {
         return el['KontinetBfS'] == continent && el['LandHeimataktuellName'] != 'Schweiz';
       });
-      this.sortByDistrict(continentsOnly); 
+      this.sortByDistrict(continentsOnly);
     },
 
     filterCountries: function(country) {
@@ -370,18 +377,21 @@ var app = (function() {
       var confessionsOnly = Data.parsedData.filter( function(el, i) {
         return el['Konfessiongruppiert2lang'] == confession;
       });
-      this.sortByDistrict(confessionsOnly);
+      this.sortByDistrict(confessionsOnly, 'AnzahlPersonen');
     },
 
-    sortByDistrict: function(array) {
+    sortByDistrict: function(array, amountsColumnName) {
+
+      amountsColumnName = typeof amountsColumnName !== undefined ? amountsColumnName : 'wirtschaftlicheBevlkerung';
+
       var groupByDistrict = Helper.group(array, 'StadtquartierhistorischName');
+
       var amountInDistricts = groupByDistrict.map( function(el, i) {
         return new Array(
           el[0]['StadtquartierhistorischName'],
-          Helper.countAmounts(el, 'wirtschaftlicheBevlkerung')
+          Helper.countAmounts(el, amountsColumnName)
         );
       });
-
       Visualization.preparePeople(amountInDistricts);
     }
 
@@ -462,7 +472,7 @@ var app = (function() {
           }
         }
 
-        this.drawPeople(boundariesPx, amount);  
+        this.drawPeople(boundariesPx, amount);
 
       }, this));
 
@@ -486,7 +496,7 @@ var app = (function() {
 
       var randomX = this.getRandomPointFromRange(bbox.x, bbox.x2);
       var randomY = this.getRandomPointFromRange(bbox.y, bbox.y2);
-      
+
       var isInPolygon = this.isInPolygon(boundariesPx, randomX, randomY);
 
       if (isInPolygon) {
