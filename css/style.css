@@ -1,7 +1,7 @@
 body {
 	font-family: 'Lucida Grande';
 	font-size: 16px;
-
+	color: #fff;
 	background: #222;
 }
 
@@ -10,11 +10,32 @@ body {
 }
 
 .box {
-	padding: 1em;
+	float: left;
 }
 
 .box-messages {
 	font-size: 0.8em;
 	color: #776928;
 	background: #FCF0B9;
+}
+
+.ui-box {
+	float: left;
+}
+
+.ui-right {
+	position: absolute;
+	right: 0;
+}
+
+.category {
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	margin-bottom: 10px;
+	border-bottom: 3px solid #000;
+}
+
+.category-right {
+
 }

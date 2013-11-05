@@ -74,7 +74,6 @@ var datasets = [
   "zweiradabstellplatz"
 ];
 
-
 var maxLng = 8.62544982499102;
 var minLng = 8.44801379462696;
 var maxLat = 47.434666835715;
@@ -88,23 +87,29 @@ var canvasHeight = canvasWidth*ratio;
 var app = (function() {
 
   var initApp = function() {
-    var dataFile = 'bevoelkerung.csv';
-    var mapFile = 'statistische_quartiere.json';
-
-    // load and prepare data
-    DataLoader.loadData(dataFile, People.parseCsvData, People);
 
     UI.init();
     Visualization.init();
+    //UI.render();
 
     // load map and points
-    DataLoader.loadData(mapFile, Map.parseJsonData, Map);
+    DataLoader.loadData(Files.mapFile, Map.parseJsonData);
     
   };
+
+  var Files =  {
+    nationsFile: 'bevoelkerung.csv',
+    confessionFile: 'konfession.csv',
+    ageFile: 'alter.csv',
+    mapFile: 'statistische_quartiere.json'
+  }
 
   var UI = {
 
     el: {
+      uiLeftContainer: $('.js-ui-left'),
+      uiRightContainer: $('.js-ui-right'),
+      uiGraphContainer: $('<div></div>').addClass('graph'),
       messageContainer: $('.js-messages'),
       loadingPicture: $('<img src="img/loading.gif">')
     },
@@ -115,51 +120,100 @@ var app = (function() {
     },
 
     init: function() {
-      this.graphPaper = Raphael('graph', 1000, 4000);
+      this.graphs = {};
+
+      var peopleCategories = [
+        ['Heimatland', this.loadNations, Files.nationsFile],
+        ['Heimatkontinent', this.loadContinents, Files.nationsFile],
+        ['Alter', this.loadAge, Files.ageFile],
+        ['Konfession', this.loadConfessions, Files.confessionFile]
+      ];
+
+      $.each(peopleCategories, function(i, el) {
+        var title = $('<div></div>').addClass('category-title').html(el[0]);
+        var category = $('<div></div>').addClass('category category-right').append(title);
+
+        UI.el.uiRightContainer.append(category.append(title));
+
+        category.on('click', function() {
+          DataLoader.loadData(el[2], el[1]);
+        });
+      });
+
+      UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
+      
     },
 
-    render: function() {
-      this.drawGraph('sortedContinent');
-      //this.drawGraph('sortedCountry');
+    loadNations: function(data) {
+      People.parseCsvData(data);
+      People.filterData('LandHeimataktuellName', 'sortedCountry');
+      UI.drawGraph('sortedCountry', 1800);
+    },
+
+    loadContinents: function(data) {
+      People.parseCsvData(data);
+      People.filterData('KontinetBfS', 'sortedContinent', new Array('LandHeimataktuellName', 'Schweiz'));
+      UI.drawGraph('sortedContinent', 200);
+    },
+
+    loadConfessions: function(data) {
+      People.parseCsvData(data);
+      console.log(Data.parsedData);
+      People.filterData('Konfessiongruppiert2lang', 'sortedConfession');
+      UI.drawGraph('sortedConfession', 200);
+    },
+
+    loadAge: function(data) {
+      People.parseCsvData(data);
+      People.filterData('5JahresAltersgruppe', 'sortedAge');
+      UI.drawGraph('sortedAge', 1800);
     },
 
     finishedLoading: function() {
       this.el.messageContainer.html(UI.messages.finishedDataLoading);
     },
 
-    drawGraph: function(sortKey) {
+    drawGraph: function(sortKey, height) {
 
-      var xStart = 200,
-          yStart = 20,
-          yOffset = 20,
-          xOffset = 10,
+      var hook = $('<div><div>').addClass('js-' + sortKey).addClass('ui-box');
+
+      UI.el.uiGraphContainer.html(hook);
+
+      this.graphs[sortKey] = Raphael(hook[0], 200, height);
+
+      var xStart = 0,
+          yStart = 10,
+          yOffset = 30,
+          xOffset = 0,
+          barHeight = 4,
           maxValue = Helper.getMaxValue(Data.people[sortKey], 1);
 
       Data.people[sortKey].forEach( function(el, i) {
 
-        var rectWidth = el[1]/maxValue * 400;
+        var barWidth = el[1]/maxValue * 190;
 
-        var t = this.graphPaper.text( xStart, yStart + i * yOffset, el[0]);
+        var t = this.graphs[sortKey].text(xStart + xOffset, yStart + i * yOffset, el[0]);
         t.attr({
           'fill': '#fff',
           'font': "12px 'Lucida Grande', sans-serif",
-          'text-anchor': 'end'
+          'text-anchor': 'start'
         });
 
         var functionName = 'handle' + sortKey;
         this.bindClickEvent(t.node, this[functionName]);
 
-        var g = this.graphPaper.rect( xStart + xOffset, yStart + i * yOffset - 8, rectWidth, 16, 2);
+        var g = this.graphs[sortKey].rect( xStart + xOffset, yStart + i * yOffset + 10, barWidth, barHeight, 2);
         g.attr({
           'fill': '#bada55',
-          'stroke-width': 0
+          'stroke-width': 0,
+          'r': 0
         });
 
-        var n = this.graphPaper.text( xStart + xOffset*2 + rectWidth, yStart + i * yOffset, el[1]);
+        var n = this.graphs[sortKey].text( xStart + 200, yStart + i * yOffset, el[1]);
         n.attr({
           'fill': '#999',
           'font': "10px 'Lucida Grande', sans-serif",
-          'text-anchor': 'start'
+          'text-anchor': 'end'
         });
 
       }, this);
@@ -171,8 +225,6 @@ var app = (function() {
     },
 
     handlesortedContinent: function(evt) {
-      evt.preventDefault();
-
       var continent = evt.currentTarget.textContent;
       console.log(evt.currentTarget.textContent);
 
@@ -180,7 +232,17 @@ var app = (function() {
     },
 
     handlesortedCountry: function(evt) {
+      var country = evt.currentTarget.textContent;
       console.log(evt.currentTarget.textContent);
+
+      People.filterCountries(country);
+    },
+
+    handlesortedAge: function(evt) {
+      var age = evt.currentTarget.textContent;
+      console.log(evt.currentTarget.textContent);
+
+      People.filterAge(age);
     }
 
   }
@@ -192,21 +254,20 @@ var app = (function() {
      *
      * @param  {function} parseDataFunction   The function that should be called to parse the data that was loaded
      */
-    loadData: function(dataFile, parseDataFunction, referenceObject) {
-      //UI.el.messageContainer.append(UI.el.loadingPicture);
+    loadData: function(dataFile, callbackFunction) {
       /**
        * We use jQuery’s proxy function to set the object to the object we need.
        * Otherwise it would be on the jQuery object, but we don’t need that.
        */
-      $.get('js/data/' + dataFile, $.proxy(parseDataFunction, referenceObject));
+      $.get('js/data/' + dataFile, callbackFunction);
     }
 
   };
 
   var Map = {
     parseJsonData: function(data) {
-      this.districts = data.features;
-      Visualization.drawBorders(this.districts);
+      Map.districts = data.features;
+      Visualization.drawBorders(Map.districts);
     }
   };
 
@@ -247,13 +308,7 @@ var app = (function() {
       }
 
       Data.parsedData = this.parsedData;
-
-      this.filterData('KontinetBfS', 'sortedContinent', new Array('LandHeimataktuellName', 'Schweiz'));
-      //this.filterData('LandHeimataktuellName', 'sortedCountry');
-
-      console.log(Data);
-      UI.render();
-
+    
     },
 
     /**
@@ -261,7 +316,7 @@ var app = (function() {
      */
     filterData: function(filterBy, sortKey, exclude) {
       
-      var filteredData = []
+      var filteredData =  Data.parsedData;
 
       if (exclude != undefined) {
         filteredData = Data.parsedData.filter( function(el, i) {
@@ -291,18 +346,42 @@ var app = (function() {
     },
 
     filterContinents: function(continent) {
-      var continentOnly = Data.parsedData.filter( function(el, i) {
+      var continentsOnly = Data.parsedData.filter( function(el, i) {
         return el['KontinetBfS'] == continent && el['LandHeimataktuellName'] != 'Schweiz';
       });
+      this.sortByDistrict(continentsOnly); 
+    },
 
-      var groupByDistrict = Helper.group(continentOnly, 'StadtquartierhistorischName');
+    filterCountries: function(country) {
+      var countriesOnly = Data.parsedData.filter( function(el, i) {
+        return el['LandHeimataktuellName'] == country;
+      });
+      this.sortByDistrict(countriesOnly);
+    },
+
+    filterAge: function(age) {
+      var ageGroupsOnly = Data.parsedData.filter( function(el, i) {
+        return el['5JahresAltersgruppe'] == age;
+      });
+      this.sortByDistrict(ageGroupsOnly);
+    },
+
+    filterConfessions: function(confession) {
+      var confessionsOnly = Data.parsedData.filter( function(el, i) {
+        return el['Konfessiongruppiert2lang'] == confession;
+      });
+      this.sortByDistrict(confessionsOnly);
+    },
+
+    sortByDistrict: function(array) {
+      var groupByDistrict = Helper.group(array, 'StadtquartierhistorischName');
       var amountInDistricts = groupByDistrict.map( function(el, i) {
         return new Array(
           el[0]['StadtquartierhistorischName'],
           Helper.countAmounts(el, 'wirtschaftlicheBevlkerung')
         );
       });
-      
+
       Visualization.preparePeople(amountInDistricts);
     }
 
@@ -310,14 +389,9 @@ var app = (function() {
 
   var Data = {
     // contains all the loaded data
-    people: {
-
-    },
-
-    locations: {
-
-    }
-
+    people: {},
+    locations: {},
+    parsedData: []
   };
 
   var Visualization = {
