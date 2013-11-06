@@ -343,7 +343,7 @@ var app = (function() {
           Visualization.drawPoint(el, name);
         });
 
-        Animation.calculateDistances();
+        Animation.animatePeople();
       }
       else {
         Visualization.killPointsShamelessly(name);
@@ -555,7 +555,8 @@ var app = (function() {
     locations: {},
     parsedData: [],
     loadedLocations: {},
-    loadedPeople: {}
+    loadedPeople: {},
+    peopleOnMap: {}
   };
 
   var Visualization = {
@@ -672,6 +673,10 @@ var app = (function() {
         Data.loadedPeople[dataSetName] = [];
       }
 
+      if (Data.peopleOnMap[dataSetName] == undefined) {
+        Data.peopleOnMap[dataSetName] = [];
+      }
+
       for (var i = 0; i < amount; i++) {
         var inPolygon = false;
         var kaka = 0;
@@ -708,8 +713,13 @@ var app = (function() {
           "opacity": 0.7
         });
 
-        Data.loadedPeople[dataSetName].push(c);
+        var point = {
+          x: c.attr('cx'),
+          y: c.attr('cy')
+        }
 
+        Data.loadedPeople[dataSetName].push(c);
+        Data.peopleOnMap[dataSetName].push(point);
       }
 
       else {
@@ -772,17 +782,14 @@ var app = (function() {
 
   var Animation =  {
 
-    calculateDistances: function() {
+    animatePeople: function() {
 
       var array = [];
 
       $.each(Data.loadedPeople, function(i, el) {
         $.each(el, function(j, person) {
 
-          var personPoint = {
-            x: person.attr('cx'),
-            y: person.attr('cy')
-          }
+          var personPoint = Data.peopleOnMap[i][j];
 
           $.each(Data.loadedLocations, function(k, el3) {
             $.each(el3, function(l, location) {
@@ -793,7 +800,7 @@ var app = (function() {
               }
 
               var distance = Helper.lineDistance(personPoint, locationPoint);
-              var n = [person,location, distance];
+              var n = [person,location, distance, personPoint];
               array.push(n);
 
             });
@@ -809,11 +816,22 @@ var app = (function() {
 
       $.each(minDistances, function(i, el) {
 
+        var pointEnd = {
+          x: el[1].attr('cx'),
+          y: el[1].attr('cy')
+        };
+
+        var pointStart = el[3];
+
+        var angle = Helper.getAngle(pointEnd,pointStart);
+        var finalPoint = Helper.getPointFromAngleDist(pointStart, angle*Math.PI/180, el[2] * 0.7);
+
         var finalAttributes = {
-          cx: el[1].attr('cx'),
-          cy: el[1].attr('cy')
+          cx: finalPoint.x,
+          cy: finalPoint.y
         }
-        el[0].animate(finalAttributes, 2000, 'elastic');
+
+        el[0].animate(finalAttributes, 5000, 'elastic');
 
       });
     }
@@ -844,6 +862,17 @@ var app = (function() {
         }
         return sum;
       }, 0);
+    },
+
+    getAngle: function(point1, point2) {
+      return Raphael.angle(point1.x, point1.y, point2.x, point2.y);
+    },
+
+    getPointFromAngleDist: function(point, angle, distance) {
+      newX = distance * Math.cos(angle) + point.x;
+      newY = distance * Math.sin(angle) + point.y;
+
+      return { x: newX, y: newY }
     },
 
     /**
