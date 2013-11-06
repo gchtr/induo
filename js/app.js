@@ -107,7 +107,18 @@ var app = (function() {
     religionFiles: ["kirche","moschee", "synagoge"],
     sportFiles: ["tennisplatz", "hallenbad", "stadion", "skateranlage", "fussballplatz", "beachvolleyball", "eisbahn"],
     freedomFiles: ["picknickplatz","spielplatz", "friedhof", "jugendtreff", "hallenbad", "freibad", "park"]
-  }
+  };
+
+  var Colors = {
+    colors: [
+      "ff0092",   // pink
+      "ffca1b",   // orange
+      "b6ff00",   // grün
+      "228dff",   // blau
+      "ba01ff"    // violett
+    ],
+    usedColors: {}
+  };
 
   var UI = {
 
@@ -155,7 +166,6 @@ var app = (function() {
       });
 
       UI.el.uiLeftContainer.append(UI.el.uiLocationContainer);
-
 
       $.each(peopleCategories, function(i, el) {
         var title = $('<div></div>').addClass('category-title').html(el[0]);
@@ -205,48 +215,41 @@ var app = (function() {
 
     drawGraph: function(sortKey, height) {
 
-      var hook = $('<div><div>').addClass('js-' + sortKey).addClass('ui-box');
+      var maxValue = Helper.getMaxValue(Data.people[sortKey], 1);
 
-      UI.el.uiGraphContainer.html(hook);
+      $.each(Data.people[sortKey], $.proxy( function(i, el) {
 
-      this.graphs[sortKey] = Raphael(hook[0], 200, height);
-
-      var xStart = 0,
-          yStart = 10,
-          yOffset = 30,
-          xOffset = 0,
-          barHeight = 4,
-          maxValue = Helper.getMaxValue(Data.people[sortKey], 1);
-
-      Data.people[sortKey].forEach( function(el, i) {
-
+        var graphContainer = $('<div></div>').addClass('category-bargraph');
+        var graph = Raphael(graphContainer[0], 200, 4);
         var barWidth = el[1]/maxValue * 190;
 
-        var t = this.graphs[sortKey].text(xStart + xOffset, yStart + i * yOffset, el[0]);
-        t.attr({
-          'fill': '#fff',
-          'font': "12px 'Lucida Grande', sans-serif",
-          'text-anchor': 'start'
-        });
+        var xStart = 0,
+          yStart = 0,
+          yOffset = 0,
+          xOffset = 0,
+          barHeight = 4;
 
-        var functionName = 'handle' + sortKey;
-        this.bindClickEvent(t.node, this[functionName]);
-
-        var g = this.graphs[sortKey].rect( xStart + xOffset, yStart + i * yOffset + 10, barWidth, barHeight, 2);
+        var g = graph.rect( xStart + xOffset, yStart + i * yOffset, barWidth, barHeight, 2);
         g.attr({
           'fill': '#bada55',
           'stroke-width': 0,
           'r': 0
         });
 
-        var n = this.graphs[sortKey].text( xStart + 200, yStart + i * yOffset, el[1]);
-        n.attr({
-          'fill': '#999',
-          'font': "10px 'Lucida Grande', sans-serif",
-          'text-anchor': 'end'
-        });
+        var checkbox = $('<input type="checkbox" id="' + el[0] + '">');
+        var line = $('<div></div>')
+        .append(checkbox)
+        .append($('<label for="' + el[0] + '"></label>')
+          .append($('<span></span>').addClass('location-name').html(el[0]))
+          .append($('<span></span>').addClass('location-amount').html(el[1]))
+        .append(graphContainer)
+        );
 
-      }, this);
+        var functionName = 'handle' + sortKey;
+        this.bindChangeEvent(checkbox, this[functionName], el[0]);
+
+        UI.el.uiGraphContainer.append(line);
+      }, this));
 
     },
 
@@ -260,8 +263,8 @@ var app = (function() {
         var line = $('<div></div>')
         .append(checkbox)
         .append($('<label for="' + i + '"></label>')
-        .append($('<span></span>').addClass('location-name').html(i))
-        .append($('<span></span>').addClass('location-amount').html(el)
+          .append($('<span></span>').addClass('location-name').html(i))
+          .append($('<span></span>').addClass('location-amount').html(el)
         ));
 
         this.bindChangeEvent(checkbox, this.handleLocations, el);
@@ -283,30 +286,51 @@ var app = (function() {
     },
 
     handlesortedContinent: function(evt) {
-      var continent = evt.currentTarget.textContent;
-      People.filterContinents(continent);
+      var continent = evt.data.param;
+
+      if (evt.currentTarget.checked == true) {
+        var color = UI.setColor();
+        Colors.usedColors[continent] = color;
+        People.filterContinents(continent);
+      }
+      else {
+        Visualization.killPeopleShamelessly(continent);
+      }
     },
 
     handlesortedCountry: function(evt) {
-      var country = evt.currentTarget.textContent;
-      People.filterCountries(country);
+      var country = evt.data.param;
+      if (evt.currentTarget.checked == true) {
+        People.filterCountries(country);
+      }
+      else {
+        Visualization.killPeopleShamelessly(country);
+      }
     },
 
     handlesortedAge: function(evt) {
-      var age = evt.currentTarget.textContent;
-      People.filterAge(age);
+      var age = evt.data.param;
+      if (evt.currentTarget.checked == true) {
+         People.filterAge(age);
+      }
+      else {
+        Visualization.killPeopleShamelessly(age);
+      }
     },
 
     handlesortedConfession: function(evt) {
-      var confession = evt.currentTarget.textContent;
-      People.filterConfessions(confession);
+      var confession = evt.data.param;
+      if (evt.currentTarget.checked == true) {
+        People.filterConfessions(confession);
+      }
+      else {
+        Visualization.killPeopleShamelessly(confession);
+      }
     },
 
     handleLocations: function(evt) {
       var locations = evt.data.param[1];
       var name = evt.data.param[1].name;
-
-      console.log(evt);
 
       if (evt.currentTarget.checked == true) {
         $.each(locations.features, function(i, el) {
@@ -317,6 +341,22 @@ var app = (function() {
         Visualization.killPointsShamelessly(name);
       }
 
+    },
+
+    setColor: function() {
+      // daaaamn you dirty thing
+      var notUsed = Colors.colors.filter(function(col, i) {
+        var found = true;
+        $.each(Colors.usedColors, function(j, el) {
+          if (el == col) {
+            found = false;
+          }
+        });
+        return found;
+
+      });
+
+      return notUsed[0];
     }
 
   }
@@ -458,7 +498,7 @@ var app = (function() {
       var continentsOnly = Data.parsedData.filter( function(el, i) {
         return el['KontinetBfS'] == continent && el['LandHeimataktuellName'] != 'Schweiz';
       });
-      this.sortByDistrict(continentsOnly);
+      this.sortByDistrict(continentsOnly, 'KontinetBfS');
     },
 
     filterCountries: function(country) {
@@ -482,7 +522,7 @@ var app = (function() {
       this.sortByDistrict(confessionsOnly, 'AnzahlPersonen');
     },
 
-    sortByDistrict: function(array, amountsColumnName) {
+    sortByDistrict: function(array, column, amountsColumnName) {
 
       amountsColumnName = typeof amountsColumnName !== 'undefined' ? amountsColumnName : 'wirtschaftlicheBevlkerung';
 
@@ -491,9 +531,11 @@ var app = (function() {
       var amountInDistricts = groupByDistrict.map( function(el, i) {
         return new Array(
           el[0]['StadtquartierhistorischName'],
-          Helper.countAmounts(el, amountsColumnName)
+          Helper.countAmounts(el, amountsColumnName),
+          el[0][column]
         );
       });
+
       Visualization.preparePeople(amountInDistricts);
     }
 
@@ -504,7 +546,8 @@ var app = (function() {
     people: {},
     locations: {},
     parsedData: [],
-    loadedLocations: {}
+    loadedLocations: {},
+    loadedPeople: {}
   };
 
   var Visualization = {
@@ -589,6 +632,7 @@ var app = (function() {
 
       $.each(Map.districts, $.proxy(function(i, el) {
         var amount = 0,
+            dataSetName = '',
             name = el.properties['Qname'],
             boundariesPx = [];;
 
@@ -604,30 +648,45 @@ var app = (function() {
         for (var i = 0; i < dataArray.length; i++) {
           if (name == dataArray[i][0]) {
             amount = dataArray[i][1];
+            dataSetName = dataArray[i][2];
             break;
           }
         }
 
-        this.drawPeople(boundariesPx, amount);
+        this.drawPeople(boundariesPx, amount, dataSetName);
 
       }, this));
 
     },
 
-    drawPeople: function(boundaries, amount) {
+    drawPeople: function(boundaries, amount, dataSetName) {
       var bbox = this.getBoundingBox(boundaries);
+
+      if (Data.loadedPeople[dataSetName] == undefined) {
+        Data.loadedPeople[dataSetName] = [];
+      }
 
       for (var i = 0; i < amount; i++) {
         var inPolygon = false;
         var kaka = 0;
         while (inPolygon == false && kaka < 10) {
-          inPolygon = this.getRandomPointInPolygon(bbox, boundaries);
+          inPolygon = this.getRandomPointInPolygon(bbox, boundaries, dataSetName);
           kaka++;
         }
       }
     },
 
-    getRandomPointInPolygon: function(bbox, boundariesPx) {
+    killPeopleShamelessly: function(name) {
+
+      $.each(Data.loadedPeople[name], function(i, el) {
+        el.remove();
+      });
+
+      delete Colors.usedColors[name];
+      delete Data.loadedPeople[name];
+    },
+
+    getRandomPointInPolygon: function(bbox, boundariesPx, dataSetName) {
 
       var randomX = this.getRandomPointFromRange(bbox.x, bbox.x2);
       var randomY = this.getRandomPointFromRange(bbox.y, bbox.y2);
@@ -639,11 +698,14 @@ var app = (function() {
 
         c.attr({
           "stroke-width": 0,
-          "fill": "#bada55",
+          "fill": "#" + Colors.usedColors[dataSetName],
           "opacity": 0.7
         });
 
+        Data.loadedPeople[dataSetName].push(c);
+
       }
+
       else {
         console.log('noooot, Bitch!');
       }
