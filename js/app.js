@@ -131,6 +131,10 @@ var app = (function() {
       loadingPicture: $('<img src="img/loading.gif">')
     },
 
+    svgs: {
+      location: 'M8-22.4c-4.419,0-8,3.582-8,8C0-6.762,8,3.2,8,3.2s8-9.962,8-17.6C16-18.818,12.419-22.4,8-22.4z M8-9.984c-2.386,0-4.32-1.934-4.32-4.32s1.934-4.32,4.32-4.32s4.32,1.934,4.32,4.32S10.386-9.984,8-9.984z'
+    },
+
     messages: {
       waitingForData: 'Daten werden geladen',
       finishedDataLoading: 'Fertig geladen'
@@ -283,6 +287,11 @@ var app = (function() {
     bindChangeEvent: function(element, handleFunction, parameter) {
       parameter = typeof parameter !== 'undefined' ? parameter : 0;
       $(element).on('change', {param: parameter}, handleFunction);
+    },
+
+    bindHoverEvent: function(element, handleFunction, parameter, position) {
+      $(element).on('mouseover', {param: parameter, pos: position}, handleFunction);
+      $(element).on('mouseout', Visualization.hideTooltip);
     },
 
     handlesortedContinent: function(evt) {
@@ -610,20 +619,67 @@ var app = (function() {
       if (lng > minLng && lng < maxLng && lat > minLat && lat < maxLat) {
         var mapped = this.mapToCanvas(lat, lng);
 
-        var c = this.mapPaper.circle(mapped[0], mapped[1], 4);
+        var c = this.mapPaper.path(UI.svgs.location);
+        var xVal = mapped[0] - 8;
+        var yVal = mapped[1] - 2;
+        c.transform("t" + xVal + "," + yVal);
         c.attr({
-          "fill": '#f00',
-          "stroke-width": 0,
-          "opacity": 0.5
+          'fill': '#fff',
+          'stroke-width': 0
         });
 
+        var b = this.mapPaper.circle(mapped[0], mapped[1], 4);
+        b.attr({
+          "fill": '#f00',
+          "stroke-width": 0,
+          "opacity": 0
+        });
+
+        UI.bindHoverEvent(b.node, this.showTooltip, feature.properties, {x: mapped[0], y: mapped[1]});
       }
 
       if (Data.loadedLocations[name] == undefined) {
         Data.loadedLocations[name] = [];
       }
 
-      Data.loadedLocations[name].push(c);
+      Data.loadedLocations[name].push(b);
+    },
+
+    showTooltip: function(evt) {
+      console.log(evt);
+
+      var content = evt.data.param;
+      var position = evt.data.pos;
+
+      var boxXOffset = 20;
+      var boxYOffset = -65;
+
+      var box = Visualization.mapPaper.rect(position.x + boxXOffset, position.y + boxYOffset, 100, 30);
+      box.attr({
+        'fill': '#fff',
+        'stroke-width': 0
+      });
+
+      var textXOffset = boxXOffset + 5;
+      var textYOffset = boxYOffset + 10;
+
+      var textcontent = content['Name'] + "\n" + content['Adresse'];
+
+      var text = Visualization.mapPaper.text(position.x + textXOffset, position.y + textYOffset, textcontent);
+      text.attr({
+        'fill': '#000',
+        'stroke-width': 0,
+        'text-anchor': 'start'
+      });
+
+      var tooltip = Visualization.mapPaper.set();
+      tooltip.push(box, text);
+
+      Visualization.tooltip = tooltip;
+    },
+
+    hideTooltip: function(evt) {
+      Visualization.tooltip.remove();
     },
 
     killPointsShamelessly: function(name) {
@@ -633,6 +689,13 @@ var app = (function() {
       });
 
       delete Data.loadedLocations[name];
+
+      if (Object.getOwnPropertyNames(Data.loadedLocations).length === 0){
+        Animation.goHome();
+      }
+      else {
+        Animation.animatePeople();
+      }
     },
 
     preparePeople: function(dataArray) {
@@ -824,15 +887,27 @@ var app = (function() {
         var pointStart = el[3];
 
         var angle = Helper.getAngle(pointEnd,pointStart);
-        var finalPoint = Helper.getPointFromAngleDist(pointStart, angle*Math.PI/180, el[2] * 0.7);
+        var finalPoint = Helper.getPointFromAngleDist(pointStart, angle*Math.PI/180, el[2] * 0.3333);
 
         var finalAttributes = {
           cx: finalPoint.x,
           cy: finalPoint.y
         }
 
-        el[0].animate(finalAttributes, 5000, 'elastic');
+        el[0].animate(finalAttributes, 1000, 'ease-in');
 
+      });
+    },
+
+    goHome: function() {
+      $.each(Data.loadedPeople, function(i, sets) {
+        $.each(sets, function(j, person) {
+          var finalPoint = {
+            cx: Data.peopleOnMap[i][j].x,
+            cy: Data.peopleOnMap[i][j].y,
+          }
+          person.animate(finalPoint, 1000, 'ease-in');
+        });
       });
     }
 
