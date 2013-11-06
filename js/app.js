@@ -102,11 +102,11 @@ var app = (function() {
     confessionFile: 'konfession.csv',
     ageFile: 'alter.csv',
     mapFile: 'statistische_quartiere.json',
-    publicFiles: ["amtshaus", "betreibungsamt", "friedensrichteramt", "gericht"],
-    educationFiles: ["kindergarten","volksschule"],
-    religionFiles: ["kirche","moschee" ],
-    sportFiles: ["tennisplatz", "hallenbad"],
-    freedomFiles: ["picknickplatz","spielplatz"]
+    publicFiles: ["amtshaus", "betreibungsamt", "friedensrichteramt", "gericht", "friedhof", "krematorium", "kreisbuero", "sozialzentrum", "stadtpolizei", "stimmlokal", "suchtbehandlung"],
+    educationFiles: ["kindergarten","volksschule", "musikschule", "schulschwimmanlage", "kinderhort"],
+    religionFiles: ["kirche","moschee", "synagoge"],
+    sportFiles: ["tennisplatz", "hallenbad", "stadion", "skateranlage", "fussballplatz", "beachvolleyball", "eisbahn"],
+    freedomFiles: ["picknickplatz","spielplatz", "friedhof", "jugendtreff", "hallenbad", "freibad", "park"]
   }
 
   var UI = {
@@ -115,6 +115,7 @@ var app = (function() {
       uiLeftContainer: $('.js-ui-left'),
       uiRightContainer: $('.js-ui-right'),
       uiGraphContainer: $('<div></div>').addClass('graph'),
+      uiLocationContainer: $('<div></div>').addClass('locations'),
       messageContainer: $('.js-messages'),
       loadingPicture: $('<img src="img/loading.gif">')
     },
@@ -153,7 +154,7 @@ var app = (function() {
         });
       });
 
-      UI.el.uiLeftContainer.append(UI.el.uiGraphContainer);
+      UI.el.uiLeftContainer.append(UI.el.uiLocationContainer);
 
 
       $.each(peopleCategories, function(i, el) {
@@ -168,11 +169,10 @@ var app = (function() {
       });
 
       UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
-
     },
 
-    loadLocations: function(data) {
-
+    loadLocations: function() {
+      UI.drawLocations();
     },
 
     loadNations: function(data) {
@@ -250,8 +250,36 @@ var app = (function() {
 
     },
 
-    bindClickEvent: function(element, handleFunction) {
-      $(element).on('click', handleFunction);
+    drawLocations: function() {
+
+      var hook = UI.el.uiLocationContainer;
+      hook.html('');
+
+      $.each(Data.locations, $.proxy(function(i, el) {
+        var checkbox = $('<input type="checkbox" id="' + i + '">');
+        var line = $('<div></div>')
+        .append(checkbox)
+        .append($('<label for="' + i + '"></label>')
+        .append($('<span></span>').addClass('location-name').html(i))
+        .append($('<span></span>').addClass('location-amount').html(el)
+        ));
+
+        this.bindChangeEvent(checkbox, this.handleLocations, el);
+
+        hook.append(line);
+
+      }, this));
+
+    },
+
+    bindClickEvent: function(element, handleFunction, parameter) {
+      parameter = typeof parameter !== 'undefined' ? parameter : 0;
+      $(element).on('click', {param: parameter}, handleFunction);
+    },
+
+    bindChangeEvent: function(element, handleFunction, parameter) {
+      parameter = typeof parameter !== 'undefined' ? parameter : 0;
+      $(element).on('change', {param: parameter}, handleFunction);
     },
 
     handlesortedContinent: function(evt) {
@@ -272,6 +300,23 @@ var app = (function() {
     handlesortedConfession: function(evt) {
       var confession = evt.currentTarget.textContent;
       People.filterConfessions(confession);
+    },
+
+    handleLocations: function(evt) {
+      var locations = evt.data.param[1];
+      var name = evt.data.param[1].name;
+
+      console.log(evt);
+
+      if (evt.currentTarget.checked == true) {
+        $.each(locations.features, function(i, el) {
+          Visualization.drawPoint(el, name);
+        });
+      }
+      else {
+        Visualization.killPointsShamelessly(name);
+      }
+
     }
 
   }
@@ -296,20 +341,22 @@ var app = (function() {
       this.loadTarget = dataFiles.length;
       this.loadCallback = callbackFunction;
 
+      Data.locations = {};
+
       $.each(dataFiles,function(i, el) {
         DataLoader.loadData(el + '.json', DataLoader.loadCounter)
       });
     },
 
     loadCounter: function(data, textStatus, jqxhr) {
-      console.log(textStatus, jqxhr);
+      DataLoader.loadCount++;
 
-      /*this.loadCount++;
-      Data.locations['']
+      var name = data.name;
+      Data.locations[name] = [data.features.length, data];
 
-      if (this.loadCount == this.loadTarget) {
-        this.loadCallback(data);
-      }*/
+      if (DataLoader.loadCount == DataLoader.loadTarget) {
+        DataLoader.loadCallback();
+      }
     }
 
   };
@@ -437,7 +484,7 @@ var app = (function() {
 
     sortByDistrict: function(array, amountsColumnName) {
 
-      amountsColumnName = typeof amountsColumnName !== undefined ? amountsColumnName : 'wirtschaftlicheBevlkerung';
+      amountsColumnName = typeof amountsColumnName !== 'undefined' ? amountsColumnName : 'wirtschaftlicheBevlkerung';
 
       var groupByDistrict = Helper.group(array, 'StadtquartierhistorischName');
 
@@ -456,7 +503,8 @@ var app = (function() {
     // contains all the loaded data
     people: {},
     locations: {},
-    parsedData: []
+    parsedData: [],
+    loadedLocations: {}
   };
 
   var Visualization = {
@@ -505,7 +553,40 @@ var app = (function() {
 
     },
 
+    drawPoint: function(feature, name) {
+      var lng = feature.geometry.coordinates[0];
+      var lat = feature.geometry.coordinates[1];
+
+      if (lng > minLng && lng < maxLng && lat > minLat && lat < maxLat) {
+        var mapped = this.mapToCanvas(lat, lng);
+
+        var c = this.mapPaper.circle(mapped[0], mapped[1], 4);
+        c.attr({
+          "fill": '#f00',
+          "stroke-width": 0,
+          "opacity": 0.5
+        });
+
+      }
+
+      if (Data.loadedLocations[name] == undefined) {
+        Data.loadedLocations[name] = [];
+      }
+
+      Data.loadedLocations[name].push(c);
+    },
+
+    killPointsShamelessly: function(name) {
+
+      $.each(Data.loadedLocations[name], function(i, el) {
+        el.remove();
+      });
+
+      delete Data.loadedLocations[name];
+    },
+
     preparePeople: function(dataArray) {
+
       $.each(Map.districts, $.proxy(function(i, el) {
         var amount = 0,
             name = el.properties['Qname'],
@@ -534,7 +615,6 @@ var app = (function() {
     },
 
     drawPeople: function(boundaries, amount) {
-
       var bbox = this.getBoundingBox(boundaries);
 
       for (var i = 0; i < amount; i++) {
