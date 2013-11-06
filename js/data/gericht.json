@@ -1,0 +1,12 @@
+{"name":"Gericht","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52192905926137,47.3756141173074]},"properties":{"Ort":"Zürich","www":"","Adresse":"Wengistrasse 30","PLZ":"8026","Tel":"044 248 21 73","Name":"Mietgericht"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52192905926137,47.3756141173074]},"properties":{"Ort":"Zürich","www":"","Adresse":"Wengistrasse 30","PLZ":"8026","Tel":"044 248 22 73","Name":"Schlichtungsbehörde in Miet- und Pachtsachen"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5219162246883,47.3756139678971]},"properties":{"Ort":"Zürich","www":"","Adresse":"Wengistrasse 30","PLZ":"8026","Tel":"044 248 20 62","Name":"Arbeitsgericht"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54700449170335,47.3715259651881]},"properties":{"Ort":"Zürich","www":"http://www.obergericht-zh.ch","Adresse":"Hirschengraben 13","PLZ":"8001","Tel":"044 257 91 91","Name":"Obergericht des Kantons Zürich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52594126128298,47.3742898211633]},"properties":{"Ort":"Zürich","www":"http://www.bezirksgericht-zh.ch","Adresse":"Badenerstrasse 90","PLZ":"8026","Tel":"044 248 21 11","Name":"Bezirksgericht Zürich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5219162246883,47.3756139678971]},"properties":{"Ort":"Zürich","www":"","Adresse":"Wengistrasse 30","PLZ":"8026","Tel":"044 248 20 82","Name":"Eheschutzrichteramt"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5219162246883,47.3756139678971]},"properties":{"Ort":"Zürich","www":"","Adresse":"Wengistrasse 30","PLZ":"8026","Tel":"044 248 20 95","Name":"Einzelrichteramt für Erbschaftssachen"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54679585030147,47.3720757092481]},"properties":{"Ort":"Zürich","www":"http://www.handelsgericht-zh.ch","Adresse":"Hirschengraben 15","PLZ":"8001","Tel":"044 257 91 91","Name":"Handelsgericht des Kantons Zürich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54354296391498,47.370353661223]},"properties":{"Ort":"Zürich","www":"http://www.kassationsgericht-zh.ch","Adresse":"Grossmünsterplatz 1","PLZ":"8001","Tel":"044 268 30 70","Name":"Kassationsgericht des Kantons Zürich"}}
+]}

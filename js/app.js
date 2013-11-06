@@ -101,7 +101,12 @@ var app = (function() {
     nationsFile: 'bevoelkerung.csv',
     confessionFile: 'konfession.csv',
     ageFile: 'alter.csv',
-    mapFile: 'statistische_quartiere.json'
+    mapFile: 'statistische_quartiere.json',
+    publicFiles: ["amtshaus", "betreibungsamt", "friedensrichteramt", "gericht"],
+    educationFiles: ["kindergarten","volksschule"],
+    religionFiles: ["kirche","moschee" ],
+    sportFiles: ["tennisplatz", "hallenbad"],
+    freedomFiles: ["picknickplatz","spielplatz"]
   }
 
   var UI = {
@@ -129,6 +134,28 @@ var app = (function() {
         ['Konfession',      this.loadConfessions, Files.confessionFile]
       ];
 
+      var geoCategories = [
+        ['Öffentliche Einrichtungen',   Files.publicFiles],
+        ['Bildungseinrichtungen',Files.educationFiles],
+        ['Religiöse Einrichtungen', Files.religionFiles],
+        ['Sport', Files.sportFiles],
+        ['Freizeit', Files.freedomFiles]
+      ];
+
+      $.each(geoCategories, function(i, el) {
+        var title = $('<div></div>').addClass('category-title').html(el[0]);
+        var category = $('<div></div>').addClass('category category-left').append(title);
+
+        UI.el.uiLeftContainer.append(category.append(title));
+
+        category.on('click', function() {
+          DataLoader.loadBulkData(el[1], UI.loadLocations);
+        });
+      });
+
+      UI.el.uiLeftContainer.append(UI.el.uiGraphContainer);
+
+
       $.each(peopleCategories, function(i, el) {
         var title = $('<div></div>').addClass('category-title').html(el[0]);
         var category = $('<div></div>').addClass('category category-right').append(title);
@@ -141,6 +168,10 @@ var app = (function() {
       });
 
       UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
+
+    },
+
+    loadLocations: function(data) {
 
     },
 
@@ -258,6 +289,27 @@ var app = (function() {
        * Otherwise it would be on the jQuery object, but we don’t need that.
        */
       $.get('js/data/' + dataFile, callbackFunction);
+    },
+
+    loadBulkData: function(dataFiles, callbackFunction) {
+      this.loadCount = 0;
+      this.loadTarget = dataFiles.length;
+      this.loadCallback = callbackFunction;
+
+      $.each(dataFiles,function(i, el) {
+        DataLoader.loadData(el + '.json', DataLoader.loadCounter)
+      });
+    },
+
+    loadCounter: function(data, textStatus, jqxhr) {
+      console.log(textStatus, jqxhr);
+
+      /*this.loadCount++;
+      Data.locations['']
+
+      if (this.loadCount == this.loadTarget) {
+        this.loadCallback(data);
+      }*/
     }
 
   };
@@ -278,6 +330,8 @@ var app = (function() {
      */
     parseCsvData: function(data, isSpecialCase) {
 
+      isSpecialCase = typeof isSpecialCase !== undefined ? isSpecialCase : false;
+
       this.lines = data.split(/\r\n|\n/);
       this.propertyNames = this.lines[0].split(',');
 
@@ -292,7 +346,7 @@ var app = (function() {
         var line = this.lines[i];
         var cells = '';
 
-        if (typeof isSpecialCase !== undefined) {
+        if (isSpecialCase) {
           cells = line.split(",");
         }
         else {
@@ -322,7 +376,8 @@ var app = (function() {
      */
     filterData: function(filterBy, sortKey, exclude, amountsColumnName) {
 
-      amountsColumnName = typeof amountsColumnName !== undefined ? amountsColumnName : 'wirtschaftlicheBevlkerung';
+      amountsColumnName = typeof amountsColumnName !== 'undefined' ? amountsColumnName : 'wirtschaftlicheBevlkerung';
+
       var filteredData =  Data.parsedData;
 
       if (exclude != undefined) {

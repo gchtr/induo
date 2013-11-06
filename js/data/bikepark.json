@@ -1,0 +1,4 @@
+{"name":"Bikepark","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52377904424462,47.3558484027669]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/content/ssd/de/index/sport/anlagen/bike-park-allmend.html\r\n","PLZ":"8045","Tel":"044 413 93 93","Name":"Bike-Park Allmend\r\n"}}
+]}

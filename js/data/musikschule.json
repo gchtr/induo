@@ -1,0 +1,13 @@
+{"name":"Musikschule","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54029151557049,47.4163678522574]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Margrit-Rainer-Strasse 8","PLZ":"8050","Tel":"043 300 67 80","Name":"MKZ Glattal"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48676564718766,47.3726103039253]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Triemlistrasse 45","PLZ":"8047","Tel":"044 413 81 20","Name":"MKZ Letzi"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54730998514734,47.4078453777318]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Schwamendingenstrasse 10","PLZ":"8050","Tel":"044 413 81 70","Name":"MKZ Schwamendingen"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52577959104094,47.3754517194412]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Kanzleistrasse 56","PLZ":"8004","Tel":"044 413 81 30","Name":"MKZ Limmattal"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.55838750349936,47.3618631905652]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Hainerweg 6","PLZ":"8032","Tel":"044 413 80 10","Name":"Musikschule Konservatorium Zürich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52362764684583,47.370569618036]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Gerhardstrasse 1","PLZ":"8036","Tel":"044 413 81 10","Name":"MKZ Uto"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54189988672882,47.3884677411454]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Röslistrasse 14","PLZ":"8042","Tel":"044 413 81 40","Name":"MKZ Waidberg"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.55838750349936,47.3618631905652]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Hainerweg 6","PLZ":"8008","Tel":"044 413 81 50","Name":"MKZ Zürichberg"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.55342355773422,47.3660679489567]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/jugendmusikschule","Adresse":"Merkurstrasse 10","PLZ":"8008","Tel":"044 251 82 08","Name":"Kreuzplatz Musikzentrum"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54775408761378,47.3693689256297]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/mkz","Adresse":"Hirschengraben 1","PLZ":"8001","Tel":"044 413 81 80","Name":"MKZ City"}}
+]}

@@ -1,0 +1,16 @@
+{"name":"Moschee","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53145763807584,47.3776346021264]},"properties":{"Adresse":"MilitÃ¤rstrasse 52","Name":"Islamisches Zentrum ZÃ¼rich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.50299133813477,47.3865280920908]},"properties":{"Adresse":"Hohlstrasse 415","Name":"TÃ¼rkisch-Islamischer Kulturverein"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54156200340993,47.4228356006465]},"properties":{"Adresse":"Seebacherstrasse 67","Name":"Stiftung der islamischen Jugend"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.4853174078748,47.3916138298874]},"properties":{"Adresse":"Hohlstrasse 615a","Name":"FÃ¶deration Islam. Gemeinschaften"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51526891752358,47.3784518342574]},"properties":{"Adresse":"Kochstrasse 22","Name":"TÃ¼rkisch-Islamische Stiftung fÃ¼r die Schweiz"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5748655032654,47.3551093363458]},"properties":{"Adresse":"Forchstrasse 323","Name":"Mahmud"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53316019908323,47.394821322227]},"properties":{"Adresse":"RÃ¶telstrasse 86","Name":"Stiftung islamische Gemeinschaft"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5115108747503,47.3697235141221]},"properties":{"Adresse":"Birmensdorferstrasse 273","Name":"Verband Islamischer Kulturzentren"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.58370672184777,47.4061592253139]},"properties":{"Adresse":"Winterthurerstrasse 694","Name":"Semarkand Verein ZÃ¼rich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53699369246192,47.3815711722255]},"properties":{"Adresse":"Ausstellungsstrasse 21","Name":"Islamische Glaubensgemeinschaft"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49077084630981,47.3817211966023]},"properties":{"Adresse":"Rautistrasse 58","Name":"Albanisch-Islamische Gemeinschaft"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53980396711903,47.3898269505761]},"properties":{"Adresse":"Weinbergstrasse 147","Name":"Swiss Moslim Society"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48535863641641,47.3850353958845]},"properties":{"Adresse":"Eugen-Huber-Strasse 12","Name":"Fatima az-Zahra"}}
+]}

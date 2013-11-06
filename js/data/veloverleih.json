@@ -1,0 +1,9 @@
+{"name":"Veloverleih","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53860523423345,47.3758069986425]},"properties":{"Ort":"Zürich","Adresse":"Vor Globus, Ecke Linth-Escher Gasse/Schweizergasse","PLZ":"8001","Url":"http://www.zuerirollt.ch","Mail":"info@zuerirollt.ch","Name":"Züri rollt Pestalozziwiese","Tel":"079 336 36 12"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54510305035658,47.366677812054]},"properties":{"Ort":"Zürich","Adresse":"","PLZ":"8001","Url":"http://www.zuerirollt.ch","Mail":"info@zuerirollt.ch","Name":"Züri rollt Bellevue","Tel":"079 336 36 12"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53556587387813,47.3774010676644]},"properties":{"Ort":"Zürich","Adresse":"Kasernenstrasse 97","PLZ":"8001","Url":"http://www.zuerirollt.ch","Mail":"info@zuerirollt.ch","Name":"Züri rollt HB Süd","Tel":"079 336 36 12"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53892587800527,47.3791501451938]},"properties":{"Ort":"Zürich","Adresse":"Hauptbahnhof Zürich, beim Landesmuseum","PLZ":"8001","Url":"http://www.zuerirollt.ch","Mail":"info@zuerirollt.ch","Name":"Züri rollt HB Nord","Tel":"079 336 36 12"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52351862308002,47.3866719363005]},"properties":{"Ort":"Zürich","Adresse":"Josefstrasse, Richtung Heinrichstrasse","PLZ":"8005","Url":"http://www.zuerirollt.ch","Mail":"info@zuerirollt.ch","Name":"Züri rollt Im Viadukt","Tel":"079 336 36 12"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53244457331406,47.3646935298596]},"properties":{"Ort":"Zürich","Adresse":"Tessinerplatz; Kreuzung Gotthardstrasse und Alfred-Escher Strasse","PLZ":"8002","Url":"http://www.zuerirollt.ch","Mail":"info@zuerirollt.ch","Name":"Züri rollt Enge","Tel":""}}
+]}

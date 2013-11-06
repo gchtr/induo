@@ -1,0 +1,10 @@
+{"name":"Sportgarderobe","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.47743569093289,47.3810149835122]},"properties":{"Tel":"044 413 93 93","Name":"Sportgarderobe Buchlern"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.59692315196991,47.3623643962917]},"properties":{"Tel":"044 413 93 93","Name":"Sportgarderobe Witikon"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54921061273917,47.3954228719623]},"properties":{"Tel":"","Name":"Sportgarderobe Irchel"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49747641638708,47.396511320509]},"properties":{"Tel":"044 413 93 93","Name":"Sportgarderobe Hardhof"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5749875381555,47.3835322674467]},"properties":{"Tel":"044 413 93 93","Name":"Sportgarderobe Allmend Fluntern"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52909978032771,47.3985648798167]},"properties":{"Tel":"044 413 93 93","Name":"Sportgarderobe Im Rehsprung"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52010538290697,47.356858121054]},"properties":{"Tel":"044 413 93 93","Name":"Sportgarderobe Saalsporthalle"}}
+]}

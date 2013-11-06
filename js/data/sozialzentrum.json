@@ -1,0 +1,8 @@
+{"name":"Sozialzentrum","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.55021148336547,47.4071968393192]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/sd/de/index/beratung/sz/dorflinde.html","Adresse":"Schwamendingenstrasse 41","PLZ":"8050","Tel":"044 318 82 50","Name":"Sozialzentrum Dorflinde"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53190284376988,47.3705545068762]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/sd/de/index/beratung/sz/selnau.html","Adresse":"Selnaustrasse 17","PLZ":"8001","Tel":"044 412 66 77","Name":"Sozialzentrum Selnau"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53421543876041,47.3838544211217]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/sd/de/index/beratung/sz/ausstellungsstrasse.html","Adresse":"Ausstellungsstrasse 88","PLZ":"8005","Tel":"044 447 15 50","Name":"Sozialzentrum Ausstellungsstrasse"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52585607526649,47.3915253101721]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/sd/de/index/beratung/sz/hoenggerstrasse.html","Adresse":"Hönggerstrasse 24","PLZ":"8037","Tel":"043 444 63 00","Name":"Sozialzentrum Hönggerstrasse"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48779800978576,47.3759470809906]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/sd/de/index/beratung/sz/albisriederhaus.html","Adresse":"Albisriederstrasse 330","PLZ":"8047","Tel":"043 336 11 11","Name":"Sozialzentrum Albisriederhaus"}}
+]}

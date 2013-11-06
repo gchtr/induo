@@ -1,0 +1,15 @@
+{"name":"Synagoge","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52097526183107,47.3719343336171]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Erikastrasse 8","PLZ":"8003","Name":"Agudas Achim"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49855517154417,47.3691810500059]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Sallenbachstrasse 40","PLZ":"8055","Name":"Minjan Sikna"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52192232896231,47.3607485678695]},"properties":{"Ort":"ZÃ¼rich","Adresse":"RÃ¼digerstrasse 10","PLZ":"8045","Name":"Chabad Switzerland"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51863005347964,47.3734357164399]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Weststrasse 151","PLZ":"8003","Name":"Minjan Bels"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5300635860342,47.3688569157311]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Freigutstrasse 37","PLZ":"8002","Name":"Israelitische Religionsgemeinschaft"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53241096032363,47.3631433819047]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Lavaterstrasse 33","PLZ":"8002","Name":"Israelitische Kultusgemeinde"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53522972928604,47.3733336490981]},"properties":{"Ort":"ZÃ¼rich","Adresse":"NÃ¼schelerstrasse 36","PLZ":"8001","Name":"Israelitische Cultusgemeinde ZÃ¼rich"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52665824437659,47.3695127968083]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Manessestrasse 10","PLZ":"8003","Name":"Israelitische Religionsgemeinschaft"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52672958857952,47.3699279690943]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Hallwylstrasse 78","PLZ":"8004","Name":"JÃ¼dische Liberale Gemeinde Or Chadasch"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52712695449351,47.3537629301417]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Mutschellenstrasse 17","PLZ":"8002","Name":"Minjan Brunau"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52170413535872,47.37723662225]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Anwandstrasse 60","PLZ":"8004","Name":"Minjan Machikei Hadass"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53065023266861,47.3444529092955]},"properties":{"Ort":"ZÃ¼rich","Adresse":"Etzelstrasse 6","PLZ":"8038","Name":"Minjan Wollishofen"}}
+]}

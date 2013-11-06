@@ -1,0 +1,4 @@
+{"name":"Krematorium","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52741610357511,47.4056328826782]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/internet/bva/bfa/home/bva_krematorium/krematorium/allgemein.html","Adresse":"Käferholzstrasse 101","PLZ":"8046","Tel":"044 412 06 22","Name":"Krematorium Nordheim"}}
+]}

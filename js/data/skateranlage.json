@@ -1,0 +1,11 @@
+{"name":"Skateranlage","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52486886434368,47.3781948181217]},"properties":{"Ort":"Zürich","www":"","Adresse":"Hohlstrasse 68","PLZ":"8004","Tel":"","Name":"Hohlstrasse"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.47743569093289,47.3810149835122]},"properties":{"Ort":"Zürich","www":"","Adresse":"Friedhofstrasse 89","PLZ":"8048","Tel":"","Name":"Buchlern"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53373836948635,47.3870612185827]},"properties":{"Ort":"Zürich","www":"","Adresse":"Wasserwerkstrasse 91","PLZ":"8037","Tel":"","Name":"Kornhausbrücke"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53533994978478,47.3509844080837]},"properties":{"Ort":"Zürich","www":"","Adresse":"","PLZ":"8002","Tel":"","Name":"Landiwiese"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48437201685668,47.3943369507193]},"properties":{"Ort":"Zürich","www":"http://www.freestylehalle.ch","Adresse":"Bändliweg 21","PLZ":"8064","Tel":"","Name":"Freestyle-Halle Werdhölzli"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51196977145395,47.4208800441158]},"properties":{"Ort":"Zürich","www":"","Adresse":"Fronwaldstrasse 115","PLZ":"8046","Tel":"","Name":"Fronwald"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52183374593314,47.3559244023394]},"properties":{"Ort":"Zürich","www":"http://www.stadt-zuerich.ch/content/ssd/de/index/sport/anlagen/freestylepark.html","Adresse":"","PLZ":"8045","Tel":"044 413 93 93","Name":"Freestyle-Park Allmend"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.59483834978659,47.4011279358072]},"properties":{"Ort":"Zürich","www":"","Adresse":"","PLZ":"8051","Tel":"","Name":"Heerenschürli"}}
+]}

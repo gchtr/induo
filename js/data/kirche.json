@@ -1,0 +1,84 @@
+{"name":"Kirche","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54560272958564,47.3738346382609]},"properties":{"Adresse":"Predigerplatz 1","Name":"Predigerkirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54106595848547,47.3698142149342]},"properties":{"Adresse":"MÃ¼nsterhof 2","Name":"FraumÃ¼nster (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.4849466720385,47.3867148235367]},"properties":{"Adresse":"Pfarrhausstrasse 17","Name":"Alte Kirche Altstetten (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53292983086302,47.3431981918318]},"properties":{"Adresse":"Kilchbergstrasse 13","Name":"Alte Kirche Wollishofen (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52945899029568,47.3625368854432]},"properties":{"Adresse":"BÃ¼rglistrasse 15","Name":"Kirche Enge (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48871783374937,47.3842915982983]},"properties":{"Adresse":"Saumackerstrasse 81","Name":"Heilig Kreuz Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51215472914936,47.4157766709081]},"properties":{"Adresse":"Wehntalerstrasse 453","Name":"Kirche St. Katharina (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51442754228238,47.3727879614043]},"properties":{"Adresse":"Aemtlerstrasse 49","Name":"Kirche Herz Jesu Wiedikon (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54916572125389,47.4044147378984]},"properties":{"Adresse":"DÃ¶rflistrasse 17","Name":"Christuskirche (christ. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52919436051205,47.3738410611325]},"properties":{"Adresse":"Stauffacherstrasse 34","Name":"Kirche St. Jakob (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54111918931997,47.4203504754128]},"properties":{"Adresse":"HÃ¶henring 56","Name":"Markuskirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5314138514411,47.3894740808941]},"properties":{"Adresse":"Imfeldstrasse 51","Name":"Kirche Letten (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5154389925834,47.3715791687829]},"properties":{"Adresse":"Aemtlerstrasse 23","Name":"Zwinglikirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.56174806518977,47.3704572863975]},"properties":{"Adresse":"Dolderstrasse 58","Name":"Kreuzkirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51323173125298,47.3809381708431]},"properties":{"Adresse":"Hardstrasse 76","Name":"Felix und Regula Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5573327738629,47.3656705271007]},"properties":{"Adresse":"Neptunstrasse 68","Name":"Kirche St. Anton (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52271900087448,47.3582042398344]},"properties":{"Adresse":"Kalanderplatz 6","Name":"Sihlcity Kirche"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54479028706565,47.3702668200052]},"properties":{"Adresse":"Zwingliplatz 5","Name":"GrossmÃ¼nsterkapelle (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51610644886289,47.3324436553415]},"properties":{"Adresse":"Wegackerstrasse 48","Name":"Kirche Leimbach (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5567283528826,47.3770980878382]},"properties":{"Adresse":"Gellertstrasse 1","Name":"Grosse Kirche Fluntern (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54215676107833,47.387447341663]},"properties":{"Adresse":"Turnerstrasse 47","Name":"Kirche Unterstrass (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54398552423811,47.3702505970864]},"properties":{"Adresse":"Zwingliplatz 7","Name":"GrossmÃ¼nster (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52977664551049,47.361227481065]},"properties":{"Adresse":"Schulhausstrasse 22","Name":"DreikÃ¶nigskirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.50306767676375,47.4014139206876]},"properties":{"Adresse":"Brunnwiesenstrasse 57","Name":"Kirche Heilig Geist (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54482301764189,47.3796736054258]},"properties":{"Adresse":"Weinbergstrasse 32","Name":"Liebfrauen Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5392491078905,47.3717037491219]},"properties":{"Adresse":"Augustinerhof 8","Name":"Augustiner Kirche (christ. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.57515926081853,47.4093808450542]},"properties":{"Adresse":"Glattstegweg 91","Name":"Serbisch-orthodoxe Kirchgemeinde Maria Himmelfahrt (serb. orth)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54331502578447,47.3698804384176]},"properties":{"Adresse":"Limmatquai 31","Name":"Wasserkirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54996983455767,47.3680382278445]},"properties":{"Adresse":"Schanzengasse 25","Name":"Ã‰glise francaise (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54963409659082,47.3686422660203]},"properties":{"Adresse":"Promenadengasse 1","Name":"Pt. Andrews Church (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.58533697650435,47.4015645909774]},"properties":{"Adresse":"Altwiesenstrasse 172","Name":"Stefanskirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54304920782473,47.3941782440167]},"properties":{"Adresse":"Milchbuckstrasse 57","Name":"Pauluskirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5323216871258,47.3417846372316]},"properties":{"Adresse":"Auf der Egg 11","Name":"Neue Kirche Wollishofen (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48363790468739,47.3744916335812]},"properties":{"Adresse":"Albisriederstrasse 391","Name":"Alte Kirche Albisrieden (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.56493088422716,47.3784043153182]},"properties":{"Adresse":"KrÃ¤hbÃ¼hlstrasse 50","Name":"Kirche St. Martin (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52934852487006,47.4089496526283]},"properties":{"Adresse":"Wehntalerstrasse 220","Name":"Allerheiligen Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52776929425484,47.3947874215996]},"properties":{"Adresse":"Guthirtstrasse 7","Name":"Kirche Guthirt (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52765274898958,47.3866065988791]},"properties":{"Adresse":"Heinrichstrasse 132","Name":"Kirche St. Josef (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5427394477436,47.4228845944793]},"properties":{"Adresse":"Buhnrain 1","Name":"Niklauskirche Seebach (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51981102244665,47.3693215793211]},"properties":{"Adresse":"Schlossgasse 10","Name":"Bethaus Wiedikon (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51660195188289,47.3678252435905]},"properties":{"Adresse":"Goldbrunnenstrasse 54","Name":"BÃ¼hlkirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.55166695853244,47.406758709033]},"properties":{"Adresse":"Schwamendingenstrasse 57","Name":"Kirche Herz Jesu Oerlikon (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49616969763095,47.3741477913591]},"properties":{"Adresse":"Fellenbergstrasse 231","Name":"Kirche St. Konrad (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.57926861506641,47.402074120349]},"properties":{"Adresse":"DÃ¼bendorfstrasse 62","Name":"Kirche St. Gallus (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54450048286501,47.3940669493751]},"properties":{"Adresse":"Milchbuckstrasse 73","Name":"Bruder Klaus Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54692073909254,47.3797533415698]},"properties":{"Adresse":"Haldenbachstrasse 2","Name":"Russisch-Orthodoxe Kirche Hl. Pokrov, Mariaschutz (russ. orth)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49690343533497,47.4015834203782]},"properties":{"Adresse":"Am Wettingertobel 40","Name":"Kirche HÃ¶ngg (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51816570363398,47.4148921429243]},"properties":{"Adresse":"Riedenhaldenstrasse 1","Name":"Kirche Glaubten (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.57374067600641,47.3548181894272]},"properties":{"Adresse":"Lenggstrasse 75","Name":"Kirche Balgrist (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.56388959850256,47.4102334347692]},"properties":{"Adresse":"Saatlenstrasse 240","Name":"Kirche Saatlen (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53372192980709,47.4050924665624]},"properties":{"Adresse":"Hoffeld 4","Name":"Kirche MatthÃ¤us (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.50584570869751,47.3609256678632]},"properties":{"Adresse":"Schweighofstrasse 239","Name":"Kirche Friesenberg (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.56111842696511,47.3546481132732]},"properties":{"Adresse":"Zollikerstrasse 160","Name":"ErlÃ¶serkirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.59107596365087,47.35655563354]},"properties":{"Adresse":"Carl-Spitteler-Strasse 44a","Name":"Katholische Kirche Witikon (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49168371681563,47.3763924548719]},"properties":{"Adresse":"Ginsterstrasse 54","Name":"Neue Kirche Albisrieden (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51546047439527,47.3798818538723]},"properties":{"Adresse":"Bullingerstrasse 4","Name":"Kirche Hard (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.50887877501528,47.4245081606436]},"properties":{"Adresse":"Zehntenhausstrasse 94","Name":"Kirche Unterdorf Affoltern (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54717985038106,47.3838518706228]},"properties":{"Adresse":"Stapferstrasse 60","Name":"Kirche Oberstrass (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.58643293877353,47.3577225247658]},"properties":{"Adresse":"Witikonerstrasse 290","Name":"Neue Kirche Witikon (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.50183910869298,47.3785838882587]},"properties":{"Adresse":"Brahmsstrasse 106","Name":"Andreaskirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53328276564368,47.3837057514491]},"properties":{"Adresse":"Limmatstrasse 112","Name":"Johanneskirche (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52352292011073,47.3791721300566]},"properties":{"Adresse":"Feldstrasse 109","Name":"Italienische Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54745983718261,47.4201097621603]},"properties":{"Adresse":"Seebacherstrasse 3","Name":"Maria Lourdes Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53090744864832,47.3431366677494]},"properties":{"Adresse":"Albisstrasse 49","Name":"Kirche St. Franziskus (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48965463448978,47.3950012776088]},"properties":{"Adresse":"BÃ¤ndlistrasse 15","Name":"Chilehuus GrÃ¼enau"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54057665597122,47.3712046948943]},"properties":{"Adresse":"St. Peterhofstatt 1","Name":"Kirche St. Peter (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.472362016322,47.3895911078145]},"properties":{"Adresse":"Am Suteracher 2","Name":"Kirche Suteracker  (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5464083945306,47.4060663277009]},"properties":{"Adresse":"Oerlikonerstrasse 99","Name":"Kirche Oerlikon (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.4845437180017,47.3867136426861]},"properties":{"Adresse":"Pfarrhausstrasse 21","Name":"Grosse Kirche Altstetten (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5593020203237,47.3757132307649]},"properties":{"Adresse":"Gloriastrasse 98","Name":"Alte Kirche Fluntern (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.55833644397299,47.3605906892532]},"properties":{"Adresse":"NeumÃ¼nsterstrasse 10","Name":"NeumÃ¼nster (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.57416650927423,47.4036363120916]},"properties":{"Adresse":"Stettbachstrasse 57","Name":"Alte Kirche St.Niklaus (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5414949696176,47.3853506047861]},"properties":{"Adresse":"Kurvenstrasse 39","Name":"Lutheranische Kirche (evang. luth)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52763428845407,47.3969739363906]},"properties":{"Adresse":"Wibichstrasse 41","Name":"Kirche Wipkingen (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5062943016662,47.3703547879474]},"properties":{"Adresse":"Burstwiesenstrasse 36","Name":"Thomaskirche im Gut (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.59463243275716,47.3575489873644]},"properties":{"Adresse":"Berghaldenstrasse 51","Name":"Alte Kirche Witikon (evang. ref)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52758030850281,47.3723747712398]},"properties":{"Adresse":"Werdstrasse 63","Name":"Kirche St. Peter und Paul (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.50487117521073,47.3610114940046]},"properties":{"Adresse":"Borrweg 78","Name":"Theresien Kirche (rÃ¶m. kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.517976162355,47.3329016076539]},"properties":{"Adresse":"Leimbachstrasse 64","Name":"Maria Hilf Kirche (rÃ¶m kath)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53433599820724,47.387272621021]},"properties":{"Adresse":"Rousseaustrasse 17","Name":"Griechisch-Orthodoxe Kirche Agios Dimitrios (griech. orth)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54000426814099,47.3781354837253]},"properties":{"Adresse":"Hauptbahnhof ZÃ¼rich","Name":"Bahnhofkirche"}}
+]}

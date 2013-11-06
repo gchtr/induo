@@ -1,0 +1,25 @@
+{"name":"Velopumpstation","type":"FeatureCollection"
+,"features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51895453258398,47.3918760694588]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Hardturmstrasse (Ampèresteg/Fischerweg)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54304809001621,47.3741863774195]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Limmatquai 94"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.57247461599239,47.4046390560941]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Schwamendingerplatz/Herzogenmühlestrasse (bei Veloabstellplätzen)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54326618511864,47.411079820391]},"properties":{"Typ":"Druckluft","Bezeichnung":"Bahnhof Oerlikon/Velostation"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51476347525131,47.3743825142281]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Idaplatz"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.59657933039884,47.3976992232798]},"properties":{"Typ":"Druckluft","Bezeichnung":"Bahnhof Stettbach ( in der neuen Velostation)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.49358769145033,47.398530793467]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Meierwiesenstrasse 4"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52558672899761,47.3760332399638]},"properties":{"Typ":"Druckluft","Bezeichnung":"Kanzleiareal (Bushaltestelle Helvetiaplatz)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.4968706046357,47.3663095542334]},"properties":{"Typ":"Druckluft","Bezeichnung":"Stadtspital Triemli"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54162460754371,47.3760436210411]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Beatenplatz"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53118722879044,47.3708707034547]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Sihlhölzlistrasse 3"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.5091319126744,47.4206532389165]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Bahnhof Affoltern/Velostation"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.48808534159379,47.3915437639407]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Bahnhof Altstetten/Velostation"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53502022595516,47.3756896589507]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Gessnerallee (bei der Sigi-Feigel-Terasse)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54391455560655,47.3679659059406]},"properties":{"Typ":"Druckluft","Bezeichnung":"Utoquai, bei Pier 7"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.51743697811013,47.3858466003649]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Bahnhof Hardbrücke"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52799503287831,47.3481918971764]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Mutschellenstrasse 114"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53551057783658,47.3821982858226]},"properties":{"Typ":"Druckluft","Bezeichnung":"Museum für Gestaltung"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.52895139350963,47.3817191619967]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Langstrasse 175"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54485662127023,47.3662870018809]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Bellerivestrasse"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.53552014388328,47.3611628686464]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Mythenquai (Kiosk/Parkplatz Hafen Enge)"}}
+,{"type":"Feature","geometry":{"type":"Point","coordinates":[8.54189690357704,47.3942648301735]},"properties":{"Typ":"Handpumpe","Bezeichnung":"Scheuchzerstrasse 181"}}
+]}
