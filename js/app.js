@@ -301,6 +301,8 @@ var app = (function() {
     handlesortedCountry: function(evt) {
       var country = evt.data.param;
       if (evt.currentTarget.checked == true) {
+        var color = UI.setColor();
+        Colors.usedColors[country] = color;
         People.filterCountries(country);
       }
       else {
@@ -311,6 +313,8 @@ var app = (function() {
     handlesortedAge: function(evt) {
       var age = evt.data.param;
       if (evt.currentTarget.checked == true) {
+        var color = UI.setColor();
+        Colors.usedColors[age] = color;
          People.filterAge(age);
       }
       else {
@@ -322,6 +326,8 @@ var app = (function() {
       var confession = evt.data.param;
       if (evt.currentTarget.checked == true) {
         People.filterConfessions(confession);
+        var color = UI.setColor();
+        Colors.usedColors[confession] = color;
       }
       else {
         Visualization.killPeopleShamelessly(confession);
@@ -336,6 +342,8 @@ var app = (function() {
         $.each(locations.features, function(i, el) {
           Visualization.drawPoint(el, name);
         });
+
+        Animation.calculateDistances();
       }
       else {
         Visualization.killPointsShamelessly(name);
@@ -505,21 +513,21 @@ var app = (function() {
       var countriesOnly = Data.parsedData.filter( function(el, i) {
         return el['LandHeimataktuellName'] == country;
       });
-      this.sortByDistrict(countriesOnly);
+      this.sortByDistrict(countriesOnly, 'LandHeimataktuellName');
     },
 
     filterAge: function(age) {
       var ageGroupsOnly = Data.parsedData.filter( function(el, i) {
         return el['5JahresAltersgruppe'] == age;
       });
-      this.sortByDistrict(ageGroupsOnly);
+      this.sortByDistrict(ageGroupsOnly, '5JahresAltersgruppe');
     },
 
     filterConfessions: function(confession) {
       var confessionsOnly = Data.parsedData.filter( function(el, i) {
         return el['Konfessiongruppiert2lang'] == confession;
       });
-      this.sortByDistrict(confessionsOnly, 'AnzahlPersonen');
+      this.sortByDistrict(confessionsOnly, 'Konfessiongruppiert2lang', 'AnzahlPersonen');
     },
 
     sortByDistrict: function(array, column, amountsColumnName) {
@@ -564,7 +572,6 @@ var app = (function() {
 
     drawBorder: function(feature, index) {
       var boundaries = [];
-      //var boundariesPx = [];
       var pathString = "";
 
       // loop through all points in boundary
@@ -573,7 +580,6 @@ var app = (function() {
         var lat = point[1];
 
         var mapped = this.mapToCanvas(lat, lng);
-        //boundariesPx[index] = new Array(mapped[0],mapped[1]);
         boundaries[index] = mapped[0] + " " + mapped[1];
 
       }, this));
@@ -653,7 +659,7 @@ var app = (function() {
           }
         }
 
-        this.drawPeople(boundariesPx, amount, dataSetName);
+        this.drawPeople(boundariesPx, amount/10, dataSetName);
 
       }, this));
 
@@ -764,6 +770,56 @@ var app = (function() {
 
   };
 
+  var Animation =  {
+
+    calculateDistances: function() {
+
+      var array = [];
+
+      $.each(Data.loadedPeople, function(i, el) {
+        $.each(el, function(j, person) {
+
+          var personPoint = {
+            x: person.attr('cx'),
+            y: person.attr('cy')
+          }
+
+          $.each(Data.loadedLocations, function(k, el3) {
+            $.each(el3, function(l, location) {
+
+              var locationPoint = {
+                x: location.attr('cx'),
+                y: location.attr('cy')
+              }
+
+              var distance = Helper.lineDistance(personPoint, locationPoint);
+              var n = [person,location, distance];
+              array.push(n);
+
+            });
+          });
+        });
+      });
+
+      var newArray = Helper.group(array, 0);
+      var minDistances = newArray.map(function(array, i) {
+        var sortedArray = Helper.customSort(array, 2, true);
+        return sortedArray[0];
+      });
+
+      $.each(minDistances, function(i, el) {
+
+        var finalAttributes = {
+          cx: el[1].attr('cx'),
+          cy: el[1].attr('cy')
+        }
+        el[0].animate(finalAttributes, 2000, 'elastic');
+
+      });
+    }
+
+  };
+
   var Helper = {
     /**
      * Finds the maximum in an array by a key in a subarray
@@ -857,6 +913,19 @@ var app = (function() {
         }
         return 1;
       });
+    },
+
+    lineDistance: function (point1, point2) {
+      var xs = 0;
+      var ys = 0;
+
+      xs = point2.x - point1.x;
+      xs = xs * xs;
+
+      ys = point2.y - point1.y;
+      ys = ys * ys;
+
+      return Math.sqrt( xs + ys );
     }
   };
 
