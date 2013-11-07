@@ -1,41 +1,240 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
-	font-family: 'Lucida Grande';
-	font-size: 16px;
-	color: #fff;
-	background: #222;
+	font-family: "source-sans-pro";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 14px;
+	color: #111;
+	background: #f9f9f9;
+	overflow-y: scroll;
 }
 
-.full {
+header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
 	width: 100%;
+	opacity: 0.9;
+	line-height: 50px;
+	height: 50px;
+	background: #111;
+	color: #f9f9f9;
 }
 
-.box {
+header .left {
 	float: left;
+	width: 50%;
+	padding-left: 10px;
 }
 
-.box-messages {
-	font-size: 0.8em;
-	color: #776928;
-	background: #FCF0B9;
+header .right {
+	float: right;
+	width: 200px;
+	text-align: left;
 }
+
+header a {
+	color: #f9f9f9;
+	margin-right: 2em;
+	text-decoration: none;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: right;
+	font-size: 12px;
+	padding-right: 20px;
+	padding-bottom: 14px;
+}
+
+footer a {
+	text-decoration: none;
+	font-weight: 600;
+}
+
+h1 {
+	margin: 0;
+	font-size: 28px;
+	font-weight: 600;
+	font-style: normal;
+}
+
+h2 {
+	margin: 0 0 0.4em 0;
+	font-size: 24px;
+	font-weight: 300;
+	font-style: normal;
+}
+
+a {
+	color: #111;
+}
+
 
 .ui-box {
-	float: left;
+	z-index: 1000;
+	position: absolute;
+	width: 160px;
+	margin-top: 50px;
+}
+
+.category-info {
+	height: 160px;
+	padding-top: 40px;
+}
+
+.ui-left {
+	left: 0;
 }
 
 .ui-right {
-	position: absolute;
 	right: 0;
 }
 
+.ui-left .category-info {
+	padding-left: 10px;
+}
+
+.ui-right .category-info {
+	padding-right: 10px;
+}
+
 .category {
-	width: 200px;
+	width: 160px;
 	height: 50px;
 	line-height: 50px;
 	margin-bottom: 10px;
-	border-bottom: 3px solid #000;
+	border-bottom: 2px solid #111;
+
+	-webkit-transition: all 1s;
 }
 
-.category-right {
+.ui-right .category {
+	text-align: left;
+}
 
+.ui-left .category {
+	text-align: right;
+}
+
+.active-left, .active-right {
+	width: 360px;
+}
+
+.active-left .locations, .active-right .graph {
+	height: 500px;
+}
+
+.active-right {
+	position: relative;
+	right: 200px;
+	width: 160px;
+}
+
+.active-right .category-title {
+	width: 360px;
+}
+
+.locations {
+	display: hidden;
+}
+
+.graph {
+	display: hidden;
+	width: 200px;
+	/*overflow-y: scroll;*/
+}
+
+.graph-element {
+	line-height: 1;
+}
+
+label, .category-title {
+	cursor: pointer;
+}
+
+input[type="checkbox"] {
+	visibility: hidden;
+	width: 0;
+}
+
+input[type="checkbox"]:checked ~ div.pseudo-checkbox {
+   background-color: #111;
+   border-radius: 22px;
+   width: 11px;
+   height: 11px;
+}
+
+.pseudo-checkbox {
+	display: inline-block;
+	line-height: 12px;
+	width: 9px;
+	height: 9px;
+	opacity: 1;
+	border: 1px solid #111;
+	margin-right: 6px;
+}
+
+.location-name {
+	display: inline-block;
+	text-align: left;
+	width: 130px;
+}
+
+
+.location-amount,  {
+	display: inline-block;
+	text-align: right;
+	font-size: 12px;
+	width: 18px;
+}
+
+
+#map {
+	margin: auto;
+	margin-top: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index 700;
+	width: 1200px;
+}
+
+#map-background-overlay {
+	margin: auto;
+	padding-top: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index 600;
+	width: 1200px;
+	background: transparent;
+	background-image: -webkit-radial-gradient(50% 50%, ellipse farthest-side, rgba(255, 255, 255, 0) 65%, #f9f9f9 100%);
+}
+
+#map-background {
+	margin: auto;
+	padding-top: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index 500;
+	width: 1200px;
+	background: url(../img/karte.jpg) no-repeat;
+	background-position-x: -145px;
+	background-position-y: 15px;
+	background-size: 2165px;
+	/*background-size: 2165px;*/
 }

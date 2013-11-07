@@ -5,20 +5,47 @@
 	<title>Zurich</title>
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="//use.typekit.net/mvy3bpt.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
 
-	<div class="js-messages full box box-messages"></div>
+	<header>
+		<div class="left">
+			<h1>Induo</h1>
+			<span class="subtitle"></span>
+		</div>
+		<div class="right">
+			<a href="">Hilfe</a>
+			<a href="">Info</a>
+		</div>
+	</header>
 
-	<div class="js-ui-left ui-box"></div>
-	<div id="map" class="box"></div>
-	<div class="js-ui-right ui-right ui-box"></div>
-	<!-- <div id="graph" class="box"></div> -->
+	<div class="js-ui-left ui-left ui-box">
+		<div class="category-info">
+			<h2>Standorte</h2>
+			<p>Aktiviere Orte, um Ballungszentren darzustellen.</p>
+		</div>
 
-	<div class="js-checkbox-container box box-border"></div>
+
+	</div>
+	<div class="js-ui-right ui-right ui-box">
+		<div class="category-info">
+			<h2>Einwohner</h2>
+			<p>W&auml;hle einen Teil der Z&uuml;rcher Bev&ouml;lkerung aus.</p>
+		</div>
+
+	</div>
+
+	<div id="map-background"></div>
+	<div id="map-background-overlay"></div>
+	<div id="map"></div>
+
+	<footer>
+		Ein Visualisierungsprojekt mit <a href="http://make.opendata.ch/wiki/event:2013-10" target="_blank">Open Data</a> der <a href="http://data.stadt-zuerich.ch/" target="_blank">Stadt Zürich</a>, Stand der Daten: 2012
+	</footer>
 
 	<script src="js/vendor/jquery.js"></script>
-	<!--<script src="js/vendor/underscore.js"></script> -->
 	<script src="js/vendor/raphael.js"></script>
 	<script src="js/app.js"></script>
 

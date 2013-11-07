@@ -84,13 +84,15 @@ var ratio = 12.7/13.4;
 var canvasWidth = 800;
 var canvasHeight = canvasWidth*ratio;
 
+var viewBoxWidth = 1200;
+var xInitial = viewBoxWidth - canvasWidth;
+
 var app = (function() {
 
   var initApp = function() {
 
     UI.init();
     Visualization.init();
-    //UI.render();
 
     // load map and points
     DataLoader.loadData(Files.mapFile, Map.parseJsonData);
@@ -126,18 +128,7 @@ var app = (function() {
       uiLeftContainer: $('.js-ui-left'),
       uiRightContainer: $('.js-ui-right'),
       uiGraphContainer: $('<div></div>').addClass('graph'),
-      uiLocationContainer: $('<div></div>').addClass('locations'),
-      messageContainer: $('.js-messages'),
-      loadingPicture: $('<img src="img/loading.gif">')
-    },
-
-    svgs: {
-      location: 'M8-22.4c-4.419,0-8,3.582-8,8C0-6.762,8,3.2,8,3.2s8-9.962,8-17.6C16-18.818,12.419-22.4,8-22.4z M8-9.984c-2.386,0-4.32-1.934-4.32-4.32s1.934-4.32,4.32-4.32s4.32,1.934,4.32,4.32S10.386-9.984,8-9.984z'
-    },
-
-    messages: {
-      waitingForData: 'Daten werden geladen',
-      finishedDataLoading: 'Fertig geladen'
+      uiLocationContainer: $('<div></div>').addClass('locations')
     },
 
     init: function() {
@@ -164,12 +155,23 @@ var app = (function() {
 
         UI.el.uiLeftContainer.append(category.append(title));
 
-        category.on('click', function() {
-          DataLoader.loadBulkData(el[1], UI.loadLocations);
+        title.on('click', function(evt) {
+
+          var target = $(evt.currentTarget).parent();
+
+          if (target.hasClass('active-left')) {
+            UI.moveBackLeft(target);
+          }
+          else {
+            target.append(UI.el.uiLocationContainer).addClass('category-element');
+            DataLoader.loadBulkData(el[1], UI.loadLocations);
+            UI.moveOutLeft(target);
+          }
+
         });
       });
 
-      UI.el.uiLeftContainer.append(UI.el.uiLocationContainer);
+      //UI.el.uiLeftContainer.append(UI.el.uiLocationContainer);
 
       $.each(peopleCategories, function(i, el) {
         var title = $('<div></div>').addClass('category-title').html(el[0]);
@@ -177,12 +179,23 @@ var app = (function() {
 
         UI.el.uiRightContainer.append(category.append(title));
 
-        category.on('click', function() {
-          DataLoader.loadData(el[2], el[1]);
+        title.on('click', function(evt) {
+
+          var target = $(evt.currentTarget).parent();
+
+          if (target.hasClass('active-right')) {
+            UI.moveBackRight(target);
+          }
+          else {
+            target.append(UI.el.uiGraphContainer);
+            DataLoader.loadData(el[2], el[1]);
+            UI.moveOutRight(target);
+          }
+
         });
       });
 
-      UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
+      //UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
     },
 
     loadLocations: function() {
@@ -213,18 +226,17 @@ var app = (function() {
       UI.drawGraph('sortedAge', 1800);
     },
 
-    finishedLoading: function() {
-      this.el.messageContainer.html(UI.messages.finishedDataLoading);
-    },
-
     drawGraph: function(sortKey, height) {
+
+      var hook = UI.el.uiGraphContainer;
+      hook.empty();
 
       var maxValue = Helper.getMaxValue(Data.people[sortKey], 1);
 
       $.each(Data.people[sortKey], $.proxy( function(i, el) {
 
         var graphContainer = $('<div></div>').addClass('category-bargraph');
-        var graph = Raphael(graphContainer[0], 200, 4);
+        var graph = Raphael(graphContainer[0], 190, 4);
         var barWidth = el[1]/maxValue * 190;
 
         var xStart = 0,
@@ -241,9 +253,10 @@ var app = (function() {
         });
 
         var checkbox = $('<input type="checkbox" id="' + el[0] + '">');
-        var line = $('<div></div>')
-        .append(checkbox)
+        var line = $('<div></div>').addClass('graph-element')
         .append($('<label for="' + el[0] + '"></label>')
+          .append(checkbox)
+          .append($('<div></div>').addClass('pseudo-checkbox'))
           .append($('<span></span>').addClass('location-name').html(el[0]))
           .append($('<span></span>').addClass('location-amount').html(el[1]))
         .append(graphContainer)
@@ -252,7 +265,7 @@ var app = (function() {
         var functionName = 'handle' + sortKey;
         this.bindChangeEvent(checkbox, this[functionName], el[0]);
 
-        UI.el.uiGraphContainer.append(line);
+        hook.append(line);
       }, this));
 
     },
@@ -260,13 +273,14 @@ var app = (function() {
     drawLocations: function() {
 
       var hook = UI.el.uiLocationContainer;
-      hook.html('');
+      hook.empty();
 
       $.each(Data.locations, $.proxy(function(i, el) {
         var checkbox = $('<input type="checkbox" id="' + i + '">');
         var line = $('<div></div>')
-        .append(checkbox)
         .append($('<label for="' + i + '"></label>')
+          .append(checkbox)
+          .append($('<div></div>').addClass('pseudo-checkbox'))
           .append($('<span></span>').addClass('location-name').html(i))
           .append($('<span></span>').addClass('location-amount').html(el)
         ));
@@ -294,6 +308,28 @@ var app = (function() {
       $(element).on('mouseout', Visualization.hideTooltip);
     },
 
+    moveOutLeft: function(target) {
+      $('.active-left').removeClass('active-left');
+      target.addClass('active-left');
+      $('.active-left .locations').delay(1000).fadeIn();
+    },
+
+    moveBackLeft: function(target) {
+      $('.locations').fadeOut();
+      target.delay(1000).removeClass('active-left');
+    },
+
+    moveOutRight: function(target) {
+      $('.active-right').removeClass('active-right');
+      target.addClass('active-right');
+      $('.active-right .graph').delay(1000).fadeIn();
+    },
+
+    moveBackRight: function(target) {
+      $('.graph').fadeOut();
+      target.delay(1000).removeClass('active-right');
+    },
+
     handlesortedContinent: function(evt) {
       var continent = evt.data.param;
 
@@ -301,6 +337,8 @@ var app = (function() {
         var color = UI.setColor();
         Colors.usedColors[continent] = color;
         People.filterContinents(continent);
+
+        UI.changeColor(evt.currentTarget, color);
       }
       else {
         Visualization.killPeopleShamelessly(continent);
@@ -358,6 +396,15 @@ var app = (function() {
         Visualization.killPointsShamelessly(name);
       }
 
+    },
+
+    changeColor: function(target, color) {
+      $(target).siblings('.pseudo-checkbox').css({
+        'background-color': "#" + color
+      });
+
+      var svg = $(target).siblings('.category-bargraph').find('rect')[0];
+      $(svg).attr('fill', '#' + color);
     },
 
     setColor: function() {
@@ -571,7 +618,8 @@ var app = (function() {
   var Visualization = {
 
     init: function() {
-      this.mapPaper = Raphael("map", canvasWidth, canvasHeight);
+      this.mapPaper = Raphael("map", viewBoxWidth, canvasHeight);
+      this.mapPaper.setViewBox(-200, 0, canvasWidth, canvasHeight, false)
     },
 
     drawBorders: function(districts) {
@@ -607,7 +655,8 @@ var app = (function() {
       var b = this.mapPaper.path(pathString);
       b.attr({
         "stroke-width": 1,
-        "stroke": "#DDD"
+        "stroke": "#111",
+        "opacity": 0
       });
 
     },
@@ -619,20 +668,21 @@ var app = (function() {
       if (lng > minLng && lng < maxLng && lat > minLat && lat < maxLat) {
         var mapped = this.mapToCanvas(lat, lng);
 
-        var c = this.mapPaper.path(UI.svgs.location);
+        /*var c = this.mapPaper.path(UI.svgs.location);
         var xVal = mapped[0] - 8;
         var yVal = mapped[1] - 2;
         c.transform("t" + xVal + "," + yVal);
         c.attr({
           'fill': '#fff',
           'stroke-width': 0
-        });
+        });*/
 
-        var b = this.mapPaper.circle(mapped[0], mapped[1], 4);
+        var b = this.mapPaper.circle(mapped[0], mapped[1], 5);
         b.attr({
-          "fill": '#f00',
-          "stroke-width": 0,
-          "opacity": 0
+          "fill": '#efefef',
+          "stroke-width": 2,
+          "stroke": '#111',
+          "opacity": 0.8
         });
 
         UI.bindHoverEvent(b.node, this.showTooltip, feature.properties, {x: mapped[0], y: mapped[1]});
@@ -646,7 +696,6 @@ var app = (function() {
     },
 
     showTooltip: function(evt) {
-      console.log(evt);
 
       var content = evt.data.param;
       var position = evt.data.pos;
@@ -704,7 +753,7 @@ var app = (function() {
         var amount = 0,
             dataSetName = '',
             name = el.properties['Qname'],
-            boundariesPx = [];;
+            boundariesPx = [];
 
         $.each(el.geometry.coordinates[0], $.proxy(function(index, point) {
           var lng = point[0];
@@ -723,7 +772,7 @@ var app = (function() {
           }
         }
 
-        this.drawPeople(boundariesPx, amount/10, dataSetName);
+        this.drawPeople(boundariesPx, amount/8, dataSetName);
 
       }, this));
 
@@ -768,7 +817,7 @@ var app = (function() {
       var isInPolygon = this.isInPolygon(boundariesPx, randomX, randomY);
 
       if (isInPolygon) {
-        var c = this.mapPaper.circle(randomX, randomY, 4);
+        var c = this.mapPaper.circle(randomX, randomY, 2);
 
         c.attr({
           "stroke-width": 0,
@@ -786,7 +835,7 @@ var app = (function() {
       }
 
       else {
-        console.log('noooot, Bitch!');
+        //console.log('noooot, Bitch!');
       }
 
       return isInPolygon;
