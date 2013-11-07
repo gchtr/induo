@@ -783,20 +783,21 @@ var app = (function() {
       var boxXOffset = 20;
       var boxYOffset = -65;
 
-      var box = Visualization.mapPaper.rect(position.x + boxXOffset, position.y + boxYOffset, 100, 30);
+      var box = Visualization.mapPaper.rect(position.x + boxXOffset, position.y + boxYOffset, 150, 30);
       box.attr({
-        'fill': '#fff',
-        'stroke-width': 0
+        'fill': '#111',
+        'stroke-width': 0,
+        'opacity': 0.8,
       });
 
-      var textXOffset = boxXOffset + 5;
-      var textYOffset = boxYOffset + 10;
+      var textXOffset = boxXOffset + 8;
+      var textYOffset = boxYOffset + 15;
 
       var textcontent = content['Name'] + "\n" + content['Adresse'];
 
       var text = Visualization.mapPaper.text(position.x + textXOffset, position.y + textYOffset, textcontent);
       text.attr({
-        'fill': '#000',
+        'fill': '#f9f9f9',
         'stroke-width': 0,
         'text-anchor': 'start'
       });

@@ -16,7 +16,7 @@ header {
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 1000;
+	z-index: 900;
 	width: 100%;
 	opacity: 0.9;
 	line-height: 50px;
@@ -29,6 +29,10 @@ header .left {
 	float: left;
 	width: 50%;
 	padding-left: 10px;
+}
+
+header .left h1 {
+	display: inline-block;
 }
 
 header .right {
@@ -117,12 +121,24 @@ a {
 	-webkit-transition: all 1s;
 }
 
+.subtitle {
+	display: inline-block;
+	font-family: "source-sans-pro";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 18px;
+	float: none;
+	color: #f9f9f9;
+
+}
+
 /******************************
  *	UI Left
  ******************************/
 
 .ui-left {
 	left: 0;
+
 }
 
 /*
@@ -322,4 +338,40 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	background-size: 2165px;
 	opacity: 0.4;
 	/*background-size: 2165px;*/
+}
+
+
+
+
+/******************************
+ *
+ *	Info/Hilfe
+ *
+ ******************************/
+
+.js-help, .js-info {
+	display: none;
+}
+
+
+.js-help.open, .js-info.open{
+	position: absolute;
+	margin-top: 50px;
+	display: block;
+	background-color: #111;
+	z-index: 1000;
+	opacity: 0.9;
+	height: 100%;
+	color: #f9f9f9;
+	width: 100%;
+}
+
+.js-help.open div, .js-info.open div {
+	width: 600px;
+	margin: 100px auto;
+	text-decoration: none;
+	text-align: left;
+}
+
+
 }
