@@ -111,6 +111,38 @@ var app = (function() {
     freedomFiles: ["picknickplatz","spielplatz", "friedhof", "jugendtreff", "hallenbad", "freibad", "park"]
   };
 
+  var See = [
+    [8.54414, 47.36681],
+    [8.54751, 47.36166],
+    [8.54747, 47.35823],
+    [8.55238, 47.35298],
+    [8.55878, 47.35205],
+    [8.56116, 47.34999],
+    [8.56341, 47.34630],
+    [8.56483, 47.34622],
+    [8.56672, 47.34282],
+    [8.56740, 47.33959],
+    [8.56923, 47.33626],
+    [8.57080, 47.33437],
+    [8.57266, 47.33055],
+    [8.57356, 47.32716],
+    [8.57674, 47.32347],
+    [8.57828, 47.32034],
+    //grenze unten
+    [8.55277, 47.31922],
+    [8.54393, 47.33353],
+    [8.53994, 47.33685],
+    [8.53663, 47.34217],
+    [8.53487, 47.34865],
+    [8.53655, 47.35702],
+    [8.53573, 47.35813],
+    [8.53603, 47.36127],
+    [8.53706, 47.36310],
+    [8.53672, 47.36380],
+    [8.53972, 47.36575],
+    [8.54414, 47.36681]
+  ];
+
   var Colors = {
     colors: [
       "ff0092",   // pink
@@ -119,7 +151,8 @@ var app = (function() {
       "228dff",   // blau
       "ba01ff"    // violett
     ],
-    usedColors: {}
+    usedColors: {},
+    colorInactive: '#ddd'
   };
 
   var UI = {
@@ -128,11 +161,16 @@ var app = (function() {
       uiLeftContainer: $('.js-ui-left'),
       uiRightContainer: $('.js-ui-right'),
       uiGraphContainer: $('<div></div>').addClass('graph'),
-      uiLocationContainer: $('<div></div>').addClass('locations')
+      uiLocationContainer: $('<div></div>').addClass('locations'),
+      uiHelpContainer: $('.js-help'),
+      uiHelpLink:      $('.js-toggle-help'),
+      uiInfoContainer: $('.js-info'),
+      uiInfoLink:      $('.js-toggle-info')
     },
 
     init: function() {
       this.graphs = {};
+      this.bindHeaderLinks();
 
       var peopleCategories = [
         ['Heimatland',      this.loadNations,     Files.nationsFile],
@@ -171,7 +209,6 @@ var app = (function() {
         });
       });
 
-      //UI.el.uiLeftContainer.append(UI.el.uiLocationContainer);
 
       $.each(peopleCategories, function(i, el) {
         var title = $('<div></div>').addClass('category-title').html(el[0]);
@@ -195,7 +232,22 @@ var app = (function() {
         });
       });
 
-      //UI.el.uiRightContainer.append(UI.el.uiGraphContainer);
+    },
+
+    bindHeaderLinks: function() {
+      UI.el.uiInfoLink.on('click', function(evt) {
+        if (UI.el.uiHelpContainer.hasClass('open')) {
+          UI.el.uiHelpContainer.removeClass('open');
+        }
+        UI.el.uiInfoContainer.toggleClass('open');
+      });
+
+      UI.el.uiHelpLink.on('click', function(evt) {
+        if (UI.el.uiInfoContainer.hasClass('open')) {
+          UI.el.uiInfoContainer.removeClass('open');
+        }
+        UI.el.uiHelpContainer.toggleClass('open');
+      });
     },
 
     loadLocations: function() {
@@ -243,11 +295,11 @@ var app = (function() {
           yStart = 0,
           yOffset = 0,
           xOffset = 0,
-          barHeight = 4;
+          barHeight = 5;
 
         var g = graph.rect( xStart + xOffset, yStart + i * yOffset, barWidth, barHeight, 2);
         g.attr({
-          'fill': '#bada55',
+          'fill': Colors.colorInactive,
           'stroke-width': 0,
           'r': 0
         });
@@ -309,7 +361,9 @@ var app = (function() {
     },
 
     moveOutLeft: function(target) {
-      $('.active-left').removeClass('active-left');
+      if ($('.active-right')[0]) {
+        $('.active-left').removeClass('active-left');
+      }
       target.addClass('active-left');
       $('.active-left .locations').delay(1000).fadeIn();
     },
@@ -320,7 +374,9 @@ var app = (function() {
     },
 
     moveOutRight: function(target) {
-      $('.active-right').removeClass('active-right');
+      if ($('.active-right')[0]) {
+        $('.active-right').removeClass('active-right')
+      }
       target.addClass('active-right');
       $('.active-right .graph').delay(1000).fadeIn();
     },
@@ -341,6 +397,7 @@ var app = (function() {
         UI.changeColor(evt.currentTarget, color);
       }
       else {
+        UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(continent);
       }
     },
@@ -351,6 +408,8 @@ var app = (function() {
         var color = UI.setColor();
         Colors.usedColors[country] = color;
         People.filterCountries(country);
+
+        UI.changeColor(evt.currentTarget, color);
       }
       else {
         Visualization.killPeopleShamelessly(country);
@@ -362,7 +421,9 @@ var app = (function() {
       if (evt.currentTarget.checked == true) {
         var color = UI.setColor();
         Colors.usedColors[age] = color;
-         People.filterAge(age);
+        People.filterAge(age);
+
+        UI.changeColor(evt.currentTarget, color);
       }
       else {
         Visualization.killPeopleShamelessly(age);
@@ -375,6 +436,8 @@ var app = (function() {
         People.filterConfessions(confession);
         var color = UI.setColor();
         Colors.usedColors[confession] = color;
+
+        UI.changeColor(evt.currentTarget, color);
       }
       else {
         Visualization.killPeopleShamelessly(confession);
@@ -405,6 +468,15 @@ var app = (function() {
 
       var svg = $(target).siblings('.category-bargraph').find('rect')[0];
       $(svg).attr('fill', '#' + color);
+    },
+
+    resetColor: function(target) {
+      $(target).siblings('.pseudo-checkbox').css({
+        'background-color': 'transparent'
+      });
+
+      var svg = $(target).siblings('.category-bargraph').find('rect')[0];
+      $(svg).attr('fill', Colors.colorInactive);
     },
 
     setColor: function() {
@@ -619,7 +691,15 @@ var app = (function() {
 
     init: function() {
       this.mapPaper = Raphael("map", viewBoxWidth, canvasHeight);
-      this.mapPaper.setViewBox(-200, 0, canvasWidth, canvasHeight, false)
+      this.mapPaper.setViewBox(-200, 0, canvasWidth, canvasHeight, false);
+
+      //map see to map
+      this.lake = [];
+      $.each(See, $.proxy(function(i, el) {
+        var mapped = this.mapToCanvas(el[1], el[0]);
+        this.lake.push(mapped);
+      }, this));
+
     },
 
     drawBorders: function(districts) {
@@ -772,6 +852,10 @@ var app = (function() {
           }
         }
 
+        if (i == 1) {
+          //console.log(boundariesPx);
+        }
+
         this.drawPeople(boundariesPx, amount/8, dataSetName);
 
       }, this));
@@ -815,23 +899,29 @@ var app = (function() {
       var randomY = this.getRandomPointFromRange(bbox.y, bbox.y2);
 
       var isInPolygon = this.isInPolygon(boundariesPx, randomX, randomY);
+      // check if its not in the sea
 
       if (isInPolygon) {
-        var c = this.mapPaper.circle(randomX, randomY, 2);
+        var inLake = this.isInPolygon(this.lake, randomX, randomY);
 
-        c.attr({
-          "stroke-width": 0,
-          "fill": "#" + Colors.usedColors[dataSetName],
-          "opacity": 0.7
-        });
+        if (!inLake) {
 
-        var point = {
-          x: c.attr('cx'),
-          y: c.attr('cy')
+          var c = this.mapPaper.circle(randomX, randomY, 2);
+
+          c.attr({
+            "stroke-width": 0,
+            "fill": "#" + Colors.usedColors[dataSetName],
+            "opacity": 0.7
+          });
+
+          var point = {
+            x: c.attr('cx'),
+            y: c.attr('cy')
+          }
+
+          Data.loadedPeople[dataSetName].push(c);
+          Data.peopleOnMap[dataSetName].push(point);
         }
-
-        Data.loadedPeople[dataSetName].push(c);
-        Data.peopleOnMap[dataSetName].push(point);
       }
 
       else {
@@ -849,8 +939,10 @@ var app = (function() {
     isInPolygon: function(poly, pointx, pointy) {
       var i, j;
       var inside = false;
-      for (i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-          if(((poly[i][1] > pointy) != (poly[j][1] > pointy)) && (pointx < (poly[j][0]-poly[i][0]) * (pointy-poly[i][1]) / (poly[j][1]-poly[i][1]) + poly[i][0]) ) inside = !inside;
+      if (pointy > 5) { // dirty hack, because somewhere there are broken boundaries
+        for (i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+            if(((poly[i][1] > pointy) != (poly[j][1] > pointy)) && (pointx < (poly[j][0]-poly[i][0]) * (pointy-poly[i][1]) / (poly[j][1]-poly[i][1]) + poly[i][0]) ) inside = !inside;
+        }
       }
       return inside;
     },
