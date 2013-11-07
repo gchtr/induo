@@ -373,5 +373,20 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	text-align: left;
 }
 
+.js-help.open p {
+	margin-top: 4px;
+}
+
+.js-help.open h3 {
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.js-info.open a {
+	text-decoration: none;
+	font-weight: 600;
+	color: #f9f9f9;
+}
+
 
 }
