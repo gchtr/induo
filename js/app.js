@@ -320,7 +320,7 @@ var app = (function() {
         });
 
         var amount = el[1];
-        amount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        amount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\'");
 
         var checkbox = $('<input type="checkbox" id="' + el[0] + '">');
         var line = $('<div></div>').addClass('graph-element')
