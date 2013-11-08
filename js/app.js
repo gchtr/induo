@@ -165,7 +165,8 @@ var app = (function() {
       uiHelpContainer: $('.js-help'),
       uiHelpLink:      $('.js-toggle-help'),
       uiInfoContainer: $('.js-info'),
-      uiInfoLink:      $('.js-toggle-info')
+      uiInfoLink:      $('.js-toggle-info'),
+      uiCloseLink:     $('.js-close')
     },
 
     init: function() {
@@ -202,8 +203,7 @@ var app = (function() {
           }
           else {
             target.append(UI.el.uiLocationContainer).addClass('category-element');
-            DataLoader.loadBulkData(el[1], UI.loadLocations);
-            UI.moveOutLeft(target);
+            DataLoader.loadBulkData(el[1], UI.loadLocations, target);
           }
 
         });
@@ -225,7 +225,7 @@ var app = (function() {
           }
           else {
             target.append(UI.el.uiGraphContainer);
-            DataLoader.loadData(el[2], el[1]);
+            DataLoader.loadData(el[2], el[1], target);
             UI.moveOutRight(target);
           }
 
@@ -236,22 +236,37 @@ var app = (function() {
 
     bindHeaderLinks: function() {
       UI.el.uiInfoLink.on('click', function(evt) {
+
         if (UI.el.uiHelpContainer.hasClass('open')) {
           UI.el.uiHelpContainer.removeClass('open');
         }
+
         UI.el.uiInfoContainer.toggleClass('open');
+        UI.el.uiInfoLink.toggleClass('active');
+        UI.el.uiHelpLink.removeClass('active');
+
       });
 
       UI.el.uiHelpLink.on('click', function(evt) {
         if (UI.el.uiInfoContainer.hasClass('open')) {
           UI.el.uiInfoContainer.removeClass('open');
         }
+
         UI.el.uiHelpContainer.toggleClass('open');
+        UI.el.uiHelpLink.toggleClass('active');
+        UI.el.uiInfoLink.removeClass('active');
+      });
+
+      UI.el.uiCloseLink.on('click', function(evt) {
+        $('.modal.open').removeClass('open');
+        UI.el.uiInfoLink.removeClass('active');
+        UI.el.uiHelpLink.removeClass('active');
       });
     },
 
-    loadLocations: function() {
+    loadLocations: function(target) {
       UI.drawLocations();
+      UI.moveOutLeft(target);
     },
 
     loadNations: function(data) {
@@ -288,8 +303,8 @@ var app = (function() {
       $.each(Data.people[sortKey], $.proxy( function(i, el) {
 
         var graphContainer = $('<div></div>').addClass('category-bargraph');
-        var graph = Raphael(graphContainer[0], 190, 4);
-        var barWidth = el[1]/maxValue * 190;
+        var graph = Raphael(graphContainer[0], 163, 4);
+        var barWidth = el[1]/maxValue * 163;
 
         var xStart = 0,
           yStart = 0,
@@ -304,13 +319,16 @@ var app = (function() {
           'r': 0
         });
 
+        var amount = el[1];
+        amount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
         var checkbox = $('<input type="checkbox" id="' + el[0] + '">');
         var line = $('<div></div>').addClass('graph-element')
         .append($('<label for="' + el[0] + '"></label>')
           .append(checkbox)
           .append($('<div></div>').addClass('pseudo-checkbox'))
           .append($('<span></span>').addClass('location-name').html(el[0]))
-          .append($('<span></span>').addClass('location-amount').html(el[1]))
+          .append($('<span></span>').addClass('location-amount').html(amount))
         .append(graphContainer)
         );
 
@@ -329,7 +347,7 @@ var app = (function() {
 
       $.each(Data.locations, $.proxy(function(i, el) {
         var checkbox = $('<input type="checkbox" id="' + i + '">');
-        var line = $('<div></div>')
+        var line = $('<div></div>').addClass('locations-element')
         .append($('<label for="' + i + '"></label>')
           .append(checkbox)
           .append($('<div></div>').addClass('pseudo-checkbox'))
@@ -361,29 +379,30 @@ var app = (function() {
     },
 
     moveOutLeft: function(target) {
-      if ($('.active-right')[0]) {
+      if ($('.active-left')[0]) {
         $('.active-left').removeClass('active-left');
       }
-      target.addClass('active-left');
-      $('.active-left .locations').delay(1000).fadeIn();
+      target.addClass('active-left').find('.locations').delay(1000).slideDown();
+
     },
 
     moveBackLeft: function(target) {
-      $('.locations').fadeOut();
-      target.delay(1000).removeClass('active-left');
+      $('.locations').slideUp(200, function() {
+        target.removeClass('active-left');
+      });
     },
 
     moveOutRight: function(target) {
       if ($('.active-right')[0]) {
         $('.active-right').removeClass('active-right')
       }
-      target.addClass('active-right');
-      $('.active-right .graph').delay(1000).fadeIn();
+      target.addClass('active-right').find('.graph').delay(1000).slideDown();
     },
 
     moveBackRight: function(target) {
-      $('.graph').fadeOut();
-      target.delay(1000).removeClass('active-right');
+      $('.graph').slideUp(200, function() {
+        target.removeClass('active-right');
+      });
     },
 
     handlesortedContinent: function(evt) {
@@ -412,6 +431,7 @@ var app = (function() {
         UI.changeColor(evt.currentTarget, color);
       }
       else {
+        UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(country);
       }
     },
@@ -426,6 +446,7 @@ var app = (function() {
         UI.changeColor(evt.currentTarget, color);
       }
       else {
+        UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(age);
       }
     },
@@ -440,6 +461,7 @@ var app = (function() {
         UI.changeColor(evt.currentTarget, color);
       }
       else {
+        UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(confession);
       }
     },
@@ -456,6 +478,7 @@ var app = (function() {
         Animation.animatePeople();
       }
       else {
+        UI.resetColor(evt.currentTarget);
         Visualization.killPointsShamelessly(name);
       }
 
@@ -512,10 +535,11 @@ var app = (function() {
       $.get('js/data/' + dataFile, callbackFunction);
     },
 
-    loadBulkData: function(dataFiles, callbackFunction) {
+    loadBulkData: function(dataFiles, callbackFunction, callbackParam) {
       this.loadCount = 0;
       this.loadTarget = dataFiles.length;
       this.loadCallback = callbackFunction;
+      this.loadCallbackParam = callbackParam;
 
       Data.locations = {};
 
@@ -531,7 +555,7 @@ var app = (function() {
       Data.locations[name] = [data.features.length, data];
 
       if (DataLoader.loadCount == DataLoader.loadTarget) {
-        DataLoader.loadCallback();
+        DataLoader.loadCallback(DataLoader.loadCallbackParam);
       }
     }
 
@@ -620,10 +644,18 @@ var app = (function() {
       }, this);
 
       // sort the array
+      var ascending = false;
+      var keyToSort = 1;
+
+      /*if (sortKey == 'sortedAge') {
+        ascending = true;
+        keyToSort = 0;
+      }*/
+
       var sortedData = Helper.customSort(
         formattedData, // array to sort
-        1, // key
-        false // true = ascending; false = descending
+        keyToSort, // key
+        ascending // true = ascending; false = descending
       );
 
       Data.people[sortKey] = sortedData;

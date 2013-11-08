@@ -10,6 +10,7 @@ body {
 	color: #111;
 	background: #f9f9f9;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 header {
@@ -47,6 +48,10 @@ header a {
 	text-decoration: none;
 }
 
+header a.active {
+	font-weight: 600;
+}
+
 footer {
 	position: absolute;
 	bottom: 0;
@@ -80,6 +85,11 @@ a {
 	color: #111;
 }
 
+strong {
+	display: block;
+	font-weight: 600;
+}
+
 
 /******************************
  *
@@ -107,29 +117,27 @@ a {
 	font-size: 12px;
 }
 
-
 .category {
 	width: 160px;
 	height: 50px;
-	line-height: 50px;
 	margin-bottom: 10px;
 }
 
 .category-title {
+	line-height: 40px;
 	width: 160px;
 	border-bottom: 1px solid #111;
-	-webkit-transition: all 1s;
+	-webkit-transition: all 0.5s;
 }
 
 .subtitle {
 	display: inline-block;
-	font-family: "source-sans-pro";
 	font-weight: 300;
 	font-style: normal;
 	font-size: 18px;
 	float: none;
 	color: #f9f9f9;
-
+	margin-left: 1em;
 }
 
 /******************************
@@ -164,10 +172,6 @@ a {
 	right: 0;
 }
 
-.ui-right .category-title {
-
-}
-
 
 /*
  *	Title and Infotext
@@ -190,10 +194,12 @@ a {
  ******************************/
 
 .active-left .locations, .active-right .graph {
-	height: 500px;
+	height: 400px;
+	padding-top: 10px;
+	overflow-x: hidden;
 }
 
-.active-right .category-title,
+/*.active-right .category-title,*/
 .active-left .category-title {
 	width: 380px;
 }
@@ -216,6 +222,11 @@ a {
 	display: hidden;
 }
 
+.locations-element {
+	line-height: 1.2;
+	margin-bottom: 1em;
+}
+
 /******************************
  *	Right
  ******************************/
@@ -227,24 +238,24 @@ a {
 
 .active-right  {
 	position: relative;
-	width: 180px;
-	right: 180px;
-	margin-right: 20px;
+	right: 220px;
 }
 
 .graph {
 	display: hidden;
-	width: 200px;
-	/*overflow-y: scroll;*/
+	width: 180px;
+	overflow: auto;
 }
 
 .graph-element {
-	line-height: 1.2;
-	margin-bottom: 1em;
+	line-height: 1;
+	margin-bottom: 1.1em;
 }
 
 .category-bargraph {
 	margin-left: 17px;
+	margin-top: -4px;
+	height: 4px;
 }
 
 label, .category-title {
@@ -280,8 +291,11 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	width: 130px;
 }
 
+.graph .location-name {
+	width: 115px;
+}
 
-.location-amount,  {
+.location-amount  {
 	display: inline-block;
 	text-align: right;
 	font-size: 12px;
@@ -349,12 +363,13 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
  *
  ******************************/
 
-.js-help, .js-info {
+.modal {
 	display: none;
+	letter-spacing: 0.04em;
 }
 
 
-.js-help.open, .js-info.open{
+.modal.open {
 	position: absolute;
 	margin-top: 50px;
 	display: block;
@@ -366,27 +381,54 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	width: 100%;
 }
 
-.js-help.open div, .js-info.open div {
+.modal.open div {
 	width: 600px;
 	margin: 100px auto;
 	text-decoration: none;
 	text-align: left;
 }
 
-.js-help.open p {
+.modal p {
 	margin-top: 4px;
 }
 
-.js-help.open h3 {
+.modal h3 {
 	font-weight: bold;
 	margin-bottom: 0;
 }
 
-.js-info.open a {
+.modal a {
 	text-decoration: none;
 	font-weight: 600;
 	color: #f9f9f9;
 }
 
+.close {
+	font-weight: 600;
+	display: block;
+	margin-top: 4em;
+	text-align: right;
+}
 
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: #aaa;
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);*/
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #999;
 }
