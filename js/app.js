@@ -1,92 +1,55 @@
-var datasets = [
-  "altersheim",
-  "alterswohnung",
-  "amtshaus",
-  "anlauf_und_beratungsstelle",
-  "anlaufstelle_kinderbetreuung",
-  "aussichtspunkt",
-  "baumkataster",
-  "beachvolleyball",
-  "behindertenparkplatz",
-  "betreibungsamt",
-  "bikepark",
-  "cargotram",
-  "eisbahn",
-  "finnenbahn", // line string
-  "freibad",
-  "friedensrichteramt",
-  "friedhof",
-  "fussballplatz",
-/*  "gartendenkmalinventar",
-  "gastwirtschaftsbetrieb",*/
-  "gemeinschaftszentrum",
-  "gericht",
-  "hallenbad",
-  "jugendtreff",
-/*  "kernbohrung",*/
-  "kindergarten",
-  "kinderhaus",
-  "kinderhort",
-  "kinderkrippe",
-  "kirche",
-/*  "kirchgemeinde_ev",
-  "kirchgemeinde_rk",*/
-  "krematorium",
-  "kreisbuero",
-  "laengenprofil", // line string
-  "landschaftsschutzobjekt",
-  "mobility",
-  "moschee",
-  "muetter_vaeterberatungsstelle",
-  "musikschule",
-  "nachbarschaftshilfe",
-/*  "naturschutzobjekt",*/
-  "notariatskreis",
-  "park",
-  "parkhaus",
-  "pflegezentrum",
-  "picknickplatz",
-  "quartiertreff_quartierhaus",
-  "sammelstelle",
-/*  "schlittelweg", // line string*/
-  "schulkreis",
-  "schulschwimmanlage",
-  "skateranlage",
-  "sozialzentrum",
-  "spielplatz",
-  "spitex",
-  "sportgarderobe",
-  "sporthalle",
-  "stadion",
-  "stadtpolizei",
-  "statistische_quartiere",
-  "stimmlokal",
-  "suchtbehandlung",
-  "synagoge",
-  "tennisplatz",
-/*  "tiefbaustelle", // polygon
-  "velopumpstation",
-  "veloverleih",
-  "vitaparcours", // line string*/
-  "volksschule",
-/*  "zueri_wc_nicht_rollstuhlgaengig",
-  "zueri_wc_rollstuhlgaengig",
-  "zweiradabstellplatz"*/
-];
+/******************************
+ *
+ *  INDUO
+ *  zieht Zürich an
+ *
+ *  ---
+ *
+ *  An Interactive Data Visualization Project
+ *  with Open Data from the city of Zurich
+ *
+ *  Interaction Design Course of
+ *  Zurich University of the Arts
+ *  (@IAD_zhdk)
+ *
+ *  Students:
+ *  ---
+ *  Lukas Gächter (@lgaechter)
+ *  Nils Edison (@nilsedison)
+ *  Giacomo Pedemonte (@JakobAmStutz)
+ *
+ *  Tools used:
+ *  ---
+ *  - Open Data from http://data.stadt-zuerich.ch
+ *  - jQuery
+ *  - Raphaël.js
+ *
+ *
+ *  Yes, we are students and the code that you find
+ *  here might not be the best, as we’re still learning.
+ *  Also, deadlines make you do things that you normally wouldn‘t.
+ *  We’re sure that it probably could be optimised tremendously.
+ *
+ *  If you’d like to contribute or give us some hints on improvements,
+ *  we’d be very happy to hear from you:
+ *  - see twitter handles above
+ *  - https://github.com/lgaechter/induo)
+ *
+ ******************************/
 
-var maxLng = 8.62544982499102;
-var minLng = 8.44801379462696;
-var maxLat = 47.434666835715;
-var minLat = 47.3202200675953;
+var maxLng = 8.62544982499102,
+    minLng = 8.44801379462696,
+    maxLat = 47.434666835715,
+    minLat = 47.3202200675953,
+    ratio = 12.7/13.4,
 
-var ratio = 12.7/13.4;
+    canvasWidth = 800,
+    canvasHeight = canvasWidth*ratio,
 
-var canvasWidth = 800;
-var canvasHeight = canvasWidth*ratio;
+    viewBoxWidth = 1200,
+    xInitial = viewBoxWidth - canvasWidth;
 
-var viewBoxWidth = 1200;
-var xInitial = viewBoxWidth - canvasWidth;
-
+// module pattern. sortof.
 var app = (function() {
 
   var initApp = function() {
@@ -100,47 +63,65 @@ var app = (function() {
   };
 
   var Files =  {
-    nationsFile: 'bevoelkerung.csv',
+    nationsFile:    'bevoelkerung.csv',
     confessionFile: 'konfession.csv',
-    ageFile: 'alter.csv',
-    mapFile: 'statistische_quartiere.json',
-    publicFiles: ["amtshaus", "betreibungsamt", "friedensrichteramt", "gericht", "friedhof", "krematorium", "kreisbuero", "sozialzentrum", "stadtpolizei", "stimmlokal", "suchtbehandlung"],
-    educationFiles: ["kindergarten","volksschule", "musikschule", "schulschwimmanlage", "kinderhort"],
-    religionFiles: ["kirche","moschee", "synagoge"],
-    sportFiles: ["tennisplatz", "hallenbad", "stadion", "skateranlage", "fussballplatz", "beachvolleyball", "eisbahn"],
-    freedomFiles: ["picknickplatz","spielplatz", "friedhof", "jugendtreff", "hallenbad", "freibad", "park"]
+    ageFile:        'alter.csv',
+    mapFile:        'statistische_quartiere.json',
+    publicFiles: [
+      "amtshaus",
+      "betreibungsamt",
+      "friedensrichteramt",
+      "friedhof",
+      "gericht",
+      "kreisbuero",
+      "krematorium",
+      "sozialzentrum",
+      "stadtpolizei",
+      "stimmlokal",
+      "suchtbehandlung"
+    ],
+    educationFiles: [
+      "kindergarten",
+      "kinderhort",
+      "musikschule",
+      "schulschwimmanlage",
+      "volksschule"
+    ],
+    religionFiles: [
+      "kirche",
+      "moschee",
+      "synagoge"
+    ],
+    sportFiles: [
+      "bikepark",
+      "beachvolleyball",
+      "eisbahn",
+      "fussballplatz",
+      "hallenbad",
+      "stadion",
+      "skateranlage",
+      "tennisplatz"
+    ],
+    freedomFiles: [
+      "aussichtspunkt",
+      "freibad",
+      "friedhof",
+      "hallenbad",
+      "jugendtreff",
+      "park",
+      "picknickplatz",
+      "spielplatz"
+    ]
   };
 
   var See = [
-    [8.54414, 47.36681],
-    [8.54751, 47.36166],
-    [8.54747, 47.35823],
-    [8.55238, 47.35298],
-    [8.55878, 47.35205],
-    [8.56116, 47.34999],
-    [8.56341, 47.34630],
-    [8.56483, 47.34622],
-    [8.56672, 47.34282],
-    [8.56740, 47.33959],
-    [8.56923, 47.33626],
-    [8.57080, 47.33437],
-    [8.57266, 47.33055],
-    [8.57356, 47.32716],
-    [8.57674, 47.32347],
-    [8.57828, 47.32034],
-    //grenze unten
-    [8.55277, 47.31922],
-    [8.54393, 47.33353],
-    [8.53994, 47.33685],
-    [8.53663, 47.34217],
-    [8.53487, 47.34865],
-    [8.53655, 47.35702],
-    [8.53573, 47.35813],
-    [8.53603, 47.36127],
-    [8.53706, 47.36310],
-    [8.53672, 47.36380],
-    [8.53972, 47.36575],
-    [8.54414, 47.36681]
+    [8.54414, 47.36681],[8.54751, 47.36166],[8.54747, 47.35823],[8.55238, 47.35298],
+    [8.55878, 47.35205],[8.56116, 47.34999],[8.56341, 47.34630],[8.56483, 47.34622],
+    [8.56672, 47.34282],[8.56740, 47.33959],[8.56923, 47.33626],[8.57080, 47.33437],
+    [8.57266, 47.33055],[8.57356, 47.32716],[8.57674, 47.32347],[8.57828, 47.32034],
+    [8.55277, 47.31922],[8.54393, 47.33353],[8.53994, 47.33685],[8.53663, 47.34217],
+    [8.53487, 47.34865],[8.53655, 47.35702],[8.53573, 47.35813],[8.53603, 47.36127],
+    [8.53706, 47.36310],[8.53672, 47.36380],[8.53972, 47.36575],[8.54414, 47.36681]
   ];
 
   var Colors = {
@@ -225,6 +206,7 @@ var app = (function() {
           }
           else {
             target.append(UI.el.uiGraphContainer);
+            Visualization.killAllPeopleShamelessly();
             DataLoader.loadData(el[2], el[1], target);
             UI.moveOutRight(target);
           }
@@ -654,9 +636,9 @@ var app = (function() {
       */
 
       var sortedData = Helper.customSort(
-        formattedData, // array to sort
-        keyToSort, // key
-        ascending // true = ascending; false = descending
+        formattedData,
+        keyToSort,
+        ascending
       );
 
       Data.people[sortKey] = sortedData;
@@ -781,15 +763,6 @@ var app = (function() {
       if (lng > minLng && lng < maxLng && lat > minLat && lat < maxLat) {
         var mapped = this.mapToCanvas(lat, lng);
 
-        /*var c = this.mapPaper.path(UI.svgs.location);
-        var xVal = mapped[0] - 8;
-        var yVal = mapped[1] - 2;
-        c.transform("t" + xVal + "," + yVal);
-        c.attr({
-          'fill': '#fff',
-          'stroke-width': 0
-        });*/
-
         var b = this.mapPaper.circle(mapped[0], mapped[1], 5);
         b.attr({
           "fill": '#efefef',
@@ -821,6 +794,7 @@ var app = (function() {
         'fill': '#111',
         'stroke-width': 0,
         'opacity': 0.8,
+        'r': 2
       });
 
       var textXOffset = boxXOffset + 8;
@@ -833,6 +807,11 @@ var app = (function() {
         'fill': '#f9f9f9',
         'stroke-width': 0,
         'text-anchor': 'start'
+      });
+
+      var textWidth = text.getBBox().width;
+      box.attr({
+        'width': textWidth + 20
       });
 
       var tooltip = Visualization.mapPaper.set();
@@ -886,13 +865,14 @@ var app = (function() {
           }
         }
 
-        if (i == 1) {
-          //console.log(boundariesPx);
-        }
-
         this.drawPeople(boundariesPx, amount/8, dataSetName);
 
       }, this));
+
+      // when finished drawing people, move them if we have locations on the map
+      if (Object.getOwnPropertyNames(Data.loadedLocations).length !== 0) {
+        Animation.animatePeople();
+      }
 
     },
 
@@ -927,6 +907,18 @@ var app = (function() {
       delete Data.loadedPeople[name];
     },
 
+    killAllPeopleShamelessly: function() {
+      console.log(Data);
+      $.each(Data.loadedPeople, function(i) {
+
+        $.each(Data.loadedPeople[i], function(j, el) {
+          el.remove();
+        });
+
+        delete Data.loadedPeople[i];
+      });
+    },
+
     getRandomPointInPolygon: function(bbox, boundariesPx, dataSetName) {
 
       var randomX = this.getRandomPointFromRange(bbox.x, bbox.x2);
@@ -956,10 +948,6 @@ var app = (function() {
           Data.loadedPeople[dataSetName].push(c);
           Data.peopleOnMap[dataSetName].push(point);
         }
-      }
-
-      else {
-        //console.log('noooot, Bitch!');
       }
 
       return isInPolygon;
