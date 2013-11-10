@@ -797,21 +797,32 @@ var app = (function() {
         'r': 2
       });
 
-      var textXOffset = boxXOffset + 8;
-      var textYOffset = boxYOffset + 15;
+      var textXOffset = boxXOffset + 13;
+      var textYOffset = boxYOffset + 20;
 
-      var textcontent = content['Name'] + "\n" + content['Adresse'];
+      var textName = content['Name'] !== 'undefined' || content['Name'] != '' ? content['Name'] : 'keine Angabe',
+          textAddress = content['Adresse'] !== 'undefined' || content['Adresse'] != '' ? content['Adresse'] : '&nbsp;';
 
-      var text = Visualization.mapPaper.text(position.x + textXOffset, position.y + textYOffset, textcontent);
+      var textContent = textName + "\n" + textAddress;
+
+      var text = Visualization.mapPaper.text(position.x + textXOffset, position.y + textYOffset, textContent);
       text.attr({
         'fill': '#f9f9f9',
         'stroke-width': 0,
-        'text-anchor': 'start'
+        'text-anchor': 'start',
+        'font-size' : 14,
+        'font-family': 'source-sans-pro',
+        'font-weight': 300,
+        'font-style' : 'normal'
       });
 
-      var textWidth = text.getBBox().width;
+      var textBox = text.getBBox(),
+          textWidth = textBox.width,
+          textHeight = textBox.height;
+
       box.attr({
-        'width': textWidth + 20
+        'width': textWidth + 30,
+        'height' : textHeight + 6
       });
 
       var tooltip = Visualization.mapPaper.set();
