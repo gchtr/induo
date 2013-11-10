@@ -17,20 +17,20 @@ var datasets = [
   "friedensrichteramt",
   "friedhof",
   "fussballplatz",
-  "gartendenkmalinventar",
-  "gastwirtschaftsbetrieb",
+/*  "gartendenkmalinventar",
+  "gastwirtschaftsbetrieb",*/
   "gemeinschaftszentrum",
   "gericht",
   "hallenbad",
   "jugendtreff",
-  "kernbohrung",
+/*  "kernbohrung",*/
   "kindergarten",
   "kinderhaus",
   "kinderhort",
   "kinderkrippe",
   "kirche",
-  "kirchgemeinde_ev",
-  "kirchgemeinde_rk",
+/*  "kirchgemeinde_ev",
+  "kirchgemeinde_rk",*/
   "krematorium",
   "kreisbuero",
   "laengenprofil", // line string
@@ -40,7 +40,7 @@ var datasets = [
   "muetter_vaeterberatungsstelle",
   "musikschule",
   "nachbarschaftshilfe",
-  "naturschutzobjekt",
+/*  "naturschutzobjekt",*/
   "notariatskreis",
   "park",
   "parkhaus",
@@ -48,7 +48,7 @@ var datasets = [
   "picknickplatz",
   "quartiertreff_quartierhaus",
   "sammelstelle",
-  "schlittelweg", // line string
+/*  "schlittelweg", // line string*/
   "schulkreis",
   "schulschwimmanlage",
   "skateranlage",
@@ -64,14 +64,14 @@ var datasets = [
   "suchtbehandlung",
   "synagoge",
   "tennisplatz",
-  "tiefbaustelle", // polygon
+/*  "tiefbaustelle", // polygon
   "velopumpstation",
   "veloverleih",
-  "vitaparcours", // line string
+  "vitaparcours", // line string*/
   "volksschule",
-  "zueri_wc_nicht_rollstuhlgaengig",
+/*  "zueri_wc_nicht_rollstuhlgaengig",
   "zueri_wc_rollstuhlgaengig",
-  "zweiradabstellplatz"
+  "zweiradabstellplatz"*/
 ];
 
 var maxLng = 8.62544982499102;
@@ -650,7 +650,8 @@ var app = (function() {
       /*if (sortKey == 'sortedAge') {
         ascending = true;
         keyToSort = 0;
-      }*/
+      }
+      */
 
       var sortedData = Helper.customSort(
         formattedData, // array to sort
@@ -812,8 +813,8 @@ var app = (function() {
       var content = evt.data.param;
       var position = evt.data.pos;
 
-      var boxXOffset = 20;
-      var boxYOffset = -65;
+      var boxXOffset = 10;
+      var boxYOffset = -35;
 
       var box = Visualization.mapPaper.rect(position.x + boxXOffset, position.y + boxYOffset, 150, 30);
       box.attr({

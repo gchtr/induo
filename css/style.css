@@ -8,8 +8,7 @@ body {
 	font-style: normal;
 	font-size: 14px;
 	color: #111;
-	background: #f9f9f9;
-	overflow-y: scroll;
+	background: #f9f9f9;;
 	overflow-x: hidden;
 }
 
@@ -53,7 +52,7 @@ header a.active {
 }
 
 footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	width: 100%;
 	text-align: right;
@@ -268,10 +267,13 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked ~ div.pseudo-checkbox {
-   background-color: #111;
-   border-color: transparent;
-   width: 11px;
-   height: 11px;
+	border-color: transparent;
+	opacity: 0.8;
+}
+
+.locations input[type="checkbox"]:checked ~ div.pseudo-checkbox {
+   background-color: #f9f9f9;
+   border: 2px solid #111;
 }
 
 .pseudo-checkbox {
@@ -376,7 +378,7 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	background-color: #111;
 	z-index: 1000;
 	opacity: 0.9;
-	height: 100%;
+	min-height: 100%;
 	color: #f9f9f9;
 	width: 100%;
 }
@@ -411,7 +413,7 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 }
 
 /* Let's get this party started */
-::-webkit-scrollbar {
+div::-webkit-scrollbar {
     width: 8px;
 }
 
