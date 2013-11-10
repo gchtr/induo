@@ -139,81 +139,23 @@ var app = (function() {
   var UI = {
 
     el: {
-      uiLeftContainer: $('.js-ui-left'),
-      uiRightContainer: $('.js-ui-right'),
-      uiGraphContainer: $('<div></div>').addClass('graph'),
-      uiLocationContainer: $('<div></div>').addClass('locations'),
-      uiHelpContainer: $('.js-help'),
-      uiHelpLink:      $('.js-toggle-help'),
-      uiInfoContainer: $('.js-info'),
-      uiInfoLink:      $('.js-toggle-info'),
-      uiCloseLink:     $('.js-close')
+      uiLeftContainer:      $('.js-ui-left'),
+      uiRightContainer:     $('.js-ui-right'),
+      uiGraphContainer:     $('<div></div>').addClass('graph'),
+      uiLocationContainer:  $('<div></div>').addClass('locations'),
+      uiHelpContainer:      $('.js-help'),
+      uiHelpLink:           $('.js-toggle-help'),
+      uiInfoContainer:      $('.js-info'),
+      uiInfoLink:           $('.js-toggle-info'),
+      uiCloseLink:          $('.js-close'),
+      uiSelectedPeople:     $('.js-selected-people')
     },
 
     init: function() {
-      this.graphs = {};
+      //__this.graphs = {};
       this.bindHeaderLinks();
-
-      var peopleCategories = [
-        ['Heimatland',      this.loadNations,     Files.nationsFile],
-        ['Heimatkontinent', this.loadContinents,  Files.nationsFile],
-        ['Alter',           this.loadAge,         Files.ageFile],
-        ['Konfession',      this.loadConfessions, Files.confessionFile]
-      ];
-
-      var geoCategories = [
-        ['Öffentliche Einrichtungen',   Files.publicFiles],
-        ['Bildungseinrichtungen',Files.educationFiles],
-        ['Religiöse Einrichtungen', Files.religionFiles],
-        ['Sport', Files.sportFiles],
-        ['Freizeit', Files.freedomFiles]
-      ];
-
-      $.each(geoCategories, function(i, el) {
-        var title = $('<div></div>').addClass('category-title').html(el[0]);
-        var category = $('<div></div>').addClass('category category-left').append(title);
-
-        UI.el.uiLeftContainer.append(category.append(title));
-
-        title.on('click', function(evt) {
-
-          var target = $(evt.currentTarget).parent();
-
-          if (target.hasClass('active-left')) {
-            UI.moveBackLeft(target);
-          }
-          else {
-            target.append(UI.el.uiLocationContainer).addClass('category-element');
-            DataLoader.loadBulkData(el[1], UI.loadLocations, target);
-          }
-
-        });
-      });
-
-
-      $.each(peopleCategories, function(i, el) {
-        var title = $('<div></div>').addClass('category-title').html(el[0]);
-        var category = $('<div></div>').addClass('category category-right').append(title);
-
-        UI.el.uiRightContainer.append(category.append(title));
-
-        title.on('click', function(evt) {
-
-          var target = $(evt.currentTarget).parent();
-
-          if (target.hasClass('active-right')) {
-            UI.moveBackRight(target);
-          }
-          else {
-            target.append(UI.el.uiGraphContainer);
-            Visualization.killAllPeopleShamelessly();
-            DataLoader.loadData(el[2], el[1], target);
-            UI.moveOutRight(target);
-          }
-
-        });
-      });
-
+      this.initGeoCategories();
+      this.initPeopleCategories();
     },
 
     bindHeaderLinks: function() {
@@ -244,6 +186,73 @@ var app = (function() {
         UI.el.uiInfoLink.removeClass('active');
         UI.el.uiHelpLink.removeClass('active');
       });
+    },
+
+    initGeoCategories: function() {
+
+      var geoCategories = [
+        ['Öffentliche Einrichtungen',   Files.publicFiles],
+        ['Bildungseinrichtungen',       Files.educationFiles],
+        ['Religiöse Einrichtungen',     Files.religionFiles],
+        ['Sport',                       Files.sportFiles],
+        ['Freizeit',                    Files.freedomFiles]
+      ];
+
+      $.each(geoCategories, function(i, el) {
+        var title = $('<div></div>').addClass('category-title').html(el[0]),
+            category = $('<div></div>').addClass('category category-left').append(title);
+
+        UI.el.uiLeftContainer.append(category.append(title));
+
+        title.on('click', function(evt) {
+
+          var target = $(evt.currentTarget).parent();
+
+          if (target.hasClass('active-left')) {
+            UI.moveBackLeft(target);
+          }
+          else {
+            target.append(UI.el.uiLocationContainer).addClass('category-element');
+            DataLoader.loadBulkData(el[1], UI.loadLocations, target);
+          }
+
+        });
+      });
+
+    },
+
+    initPeopleCategories: function() {
+
+      var peopleCategories = [
+        ['Heimatland',      this.loadNations,     Files.nationsFile],
+        ['Heimatkontinent', this.loadContinents,  Files.nationsFile],
+        ['Alter',           this.loadAge,         Files.ageFile],
+        ['Konfession',      this.loadConfessions, Files.confessionFile]
+      ];
+
+      $.each(peopleCategories, function(i, el) {
+        var title = $('<div></div>').addClass('category-title').html(el[0]),
+            category = $('<div></div>').addClass('category category-right').append(title);
+
+        UI.el.uiRightContainer.append(category.append(title));
+
+        title.on('click', function(evt) {
+
+          var target = $(evt.currentTarget).parent();
+
+          if (target.hasClass('active-right')) {
+            UI.moveBackRight(target);
+          }
+          else {
+            target.append(UI.el.uiGraphContainer);
+            Visualization.killAllPeopleShamelessly();
+            DataLoader.loadData(el[2], el[1], target);
+            UI.moveOutRight(target);
+          }
+
+        });
+      });
+
     },
 
     loadLocations: function(target) {
@@ -919,7 +928,7 @@ var app = (function() {
     },
 
     killAllPeopleShamelessly: function() {
-      console.log(Data);
+
       $.each(Data.loadedPeople, function(i) {
 
         $.each(Data.loadedPeople[i], function(j, el) {
