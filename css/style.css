@@ -276,7 +276,7 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
    border: 2px solid #111;
 }
 
-.pseudo-checkbox {
+.pseudo-checkbox, .selected-color-swatch {
 	display: inline-block;
 	line-height: 12px;
 	width: 11px;
@@ -302,6 +302,35 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	text-align: right;
 	font-size: 12px;
 	width: 18px;
+}
+
+/******************************
+ *
+ *	Selected People
+ *
+ ******************************/
+
+.selected-people-box {
+	position: absolute;
+	left: 0;
+	right: 0;
+	z-index: 800;
+	width: 800px;
+	margin: 65px auto 0 auto;
+	text-align: center;
+}
+
+.selected-color {
+	display: inline-block;
+	margin-right: 2em;
+}
+
+.selected-color-swatch {
+	border: none;
+}
+
+.selected-color-name {
+	display: inline-block;
 }
 
 

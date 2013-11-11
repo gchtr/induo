@@ -152,7 +152,6 @@ var app = (function() {
     },
 
     init: function() {
-      //__this.graphs = {};
       this.bindHeaderLinks();
       this.initGeoCategories();
       this.initPeopleCategories();
@@ -255,11 +254,13 @@ var app = (function() {
 
     },
 
+    // GeoLocations
     loadLocations: function(target) {
       UI.drawLocations();
       UI.moveOutLeft(target);
     },
 
+    // People
     loadNations: function(data) {
       People.parseCsvData(data);
       People.filterData('LandHeimataktuellName', 'sortedCountry');
@@ -354,6 +355,21 @@ var app = (function() {
 
     },
 
+    drawSelectedPeople: function() {
+
+      UI.el.uiSelectedPeople.empty();
+
+      if (!$.isEmptyObject(Colors.usedColors)) {
+        $.each(Colors.usedColors, function(name, color) {
+          UI.el.uiSelectedPeople.append(
+            $('<div></div>').addClass('selected-color')
+              .append($('<div></div>').addClass('selected-color-swatch').css({ 'background-color': '#' + color }))
+              .append($('<div></div>').addClass('selected-color-name').html(name))
+          );
+        });
+      }
+    },
+
     bindClickEvent: function(element, handleFunction, parameter) {
       parameter = typeof parameter !== 'undefined' ? parameter : 0;
       $(element).on('click', {param: parameter}, handleFunction);
@@ -403,58 +419,64 @@ var app = (function() {
         var color = UI.setColor();
         Colors.usedColors[continent] = color;
         People.filterContinents(continent);
-
         UI.changeColor(evt.currentTarget, color);
       }
       else {
         UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(continent);
       }
+
+      UI.drawSelectedPeople();
     },
 
     handlesortedCountry: function(evt) {
       var country = evt.data.param;
+
       if (evt.currentTarget.checked == true) {
         var color = UI.setColor();
         Colors.usedColors[country] = color;
         People.filterCountries(country);
-
         UI.changeColor(evt.currentTarget, color);
       }
       else {
         UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(country);
       }
+
+      UI.drawSelectedPeople();
     },
 
     handlesortedAge: function(evt) {
       var age = evt.data.param;
+
       if (evt.currentTarget.checked == true) {
         var color = UI.setColor();
         Colors.usedColors[age] = color;
         People.filterAge(age);
-
         UI.changeColor(evt.currentTarget, color);
       }
       else {
         UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(age);
       }
+
+      UI.drawSelectedPeople();
     },
 
     handlesortedConfession: function(evt) {
       var confession = evt.data.param;
       if (evt.currentTarget.checked == true) {
-        People.filterConfessions(confession);
         var color = UI.setColor();
         Colors.usedColors[confession] = color;
-
+        People.filterConfessions(confession);
         UI.changeColor(evt.currentTarget, color);
       }
       else {
         UI.resetColor(evt.currentTarget);
         Visualization.killPeopleShamelessly(confession);
       }
+
+      UI.drawSelectedPeople();
     },
 
     handleLocations: function(evt) {
@@ -925,18 +947,25 @@ var app = (function() {
 
       delete Colors.usedColors[name];
       delete Data.loadedPeople[name];
+
+      UI.drawSelectedPeople();
     },
 
     killAllPeopleShamelessly: function() {
 
-      $.each(Data.loadedPeople, function(i) {
+      console.log('killall');
 
-        $.each(Data.loadedPeople[i], function(j, el) {
+      $.each(Data.loadedPeople, function(name) {
+
+        $.each(Data.loadedPeople[name], function(j, el) {
           el.remove();
         });
 
-        delete Data.loadedPeople[i];
+        delete Colors.usedColors[name];
+        delete Data.loadedPeople[name];
       });
+
+      UI.drawSelectedPeople();
     },
 
     getRandomPointInPolygon: function(bbox, boundariesPx, dataSetName) {
