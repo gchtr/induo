@@ -148,7 +148,8 @@ var app = (function() {
       uiInfoContainer:      $('.js-info'),
       uiInfoLink:           $('.js-toggle-info'),
       uiCloseLink:          $('.js-close'),
-      uiSelectedPeople:     $('.js-selected-people')
+      uiSelectedPeople:     $('.js-selected-people'),
+      uiSelectedLocations:  $('.js-selected-locations')
     },
 
     init: function() {
@@ -212,6 +213,7 @@ var app = (function() {
           }
           else {
             target.append(UI.el.uiLocationContainer).addClass('category-element');
+            Visualization.killAllPointsShamelessly();
             DataLoader.loadBulkData(el[1], UI.loadLocations, target);
           }
 
@@ -316,12 +318,12 @@ var app = (function() {
 
         var checkbox = $('<input type="checkbox" id="' + el[0] + '">');
         var line = $('<div></div>').addClass('graph-element')
-        .append($('<label for="' + el[0] + '"></label>')
-          .append(checkbox)
-          .append($('<div></div>').addClass('pseudo-checkbox'))
-          .append($('<span></span>').addClass('location-name').html(el[0]))
-          .append($('<span></span>').addClass('location-amount').html(amount))
-        .append(graphContainer)
+          .append($('<label for="' + el[0] + '"></label>')
+            .append(checkbox)
+            .append($('<div></div>').addClass('pseudo-checkbox'))
+            .append($('<span></span>').addClass('location-name').html(el[0]))
+            .append($('<span></span>').addClass('location-amount').html(amount))
+          .append(graphContainer)
         );
 
         var functionName = 'handle' + sortKey;
@@ -353,6 +355,56 @@ var app = (function() {
 
       }, this));
 
+    },
+
+    drawSelectedLocations: function() {
+
+      UI.el.uiSelectedLocations.empty();
+
+      if (! $.isEmptyObject(Data.loadedLocations)) {
+        $.each(Data.loadedLocations, function(name, el) {
+          var legendItem = $('<div></div>').addClass('selected-location')
+            .append($('<div></div>').addClass('selected-location-icon'))
+            .append($('<div></div>').addClass('selected-location-name').html(name));
+
+          UI.el.uiSelectedLocations.append(legendItem);
+          legendItem.on('mouseover', {param: el}, UI.highlightLocations);
+          legendItem.on('mouseout', {param: el}, UI.unhighlightLocations);
+        });
+      }
+
+    },
+
+    highlightLocations: function(evt) {
+      //console.log(evt);
+      var locations = evt.data.param;
+      var legendItem = evt.currentTarget;
+      var locationName = evt.currentTarget.textContent;
+
+      $(legendItem).addClass('hover');
+      $('.js-ui-left').find('#' + locationName).parent().addClass('hover');
+
+      $.each(locations, function(i, location) {
+        location.attr({
+          'fill': '#111'
+        });
+      });
+    },
+
+    unhighlightLocations: function(evt) {
+      var locations = evt.data.param;
+      var legendItem = evt.currentTarget;
+      var locationName = evt.currentTarget.textContent;
+
+
+      $(legendItem).removeClass('hover');
+      $('.js-ui-left').find('#' + locationName).parent().removeClass('hover');
+
+      $.each(locations, function(i, location) {
+        location.attr({
+          'fill': '#efefef'
+        });
+      });
     },
 
     drawSelectedPeople: function() {
@@ -480,8 +532,8 @@ var app = (function() {
     },
 
     handleLocations: function(evt) {
-      var locations = evt.data.param[1];
-      var name = evt.data.param[1].name;
+      var locations = evt.data.param[1],
+          name = evt.data.param[1].name;
 
       if (evt.currentTarget.checked == true) {
         $.each(locations.features, function(i, el) {
@@ -495,6 +547,7 @@ var app = (function() {
         Visualization.killPointsShamelessly(name);
       }
 
+      UI.drawSelectedLocations();
     },
 
     changeColor: function(target, color) {
@@ -834,7 +887,7 @@ var app = (function() {
       var textName = content['Name'] !== 'undefined' || content['Name'] != '' ? content['Name'] : 'keine Angabe',
           textAddress = content['Adresse'] !== 'undefined' || content['Adresse'] != '' ? content['Adresse'] : '&nbsp;';
 
-      var textContent = textName + "\n" + textAddress;
+      var textContent = encodeURIComponent(textName + "\n" + textAddress);
 
       var text = Visualization.mapPaper.text(position.x + textXOffset, position.y + textYOffset, textContent);
       text.attr({
@@ -880,6 +933,21 @@ var app = (function() {
       else {
         Animation.animatePeople();
       }
+    },
+
+    killAllPointsShamelessly: function() {
+
+      if (! $.isEmptyObject(Data.loadedLocations)) {
+        $.each(Data.loadedLocations, function(name) {
+
+          $.each(Data.loadedLocations[name], function(i, el) {
+            el.remove();
+          });
+
+          delete Data.loadedLocations[name];
+        });
+      }
+
     },
 
     preparePeople: function(dataArray) {
@@ -953,19 +1021,21 @@ var app = (function() {
 
     killAllPeopleShamelessly: function() {
 
-      console.log('killall');
+      if (! $.isEmptyObject(Data.loadedPeople)) {
 
-      $.each(Data.loadedPeople, function(name) {
+        $.each(Data.loadedPeople, function(name) {
 
-        $.each(Data.loadedPeople[name], function(j, el) {
-          el.remove();
+          $.each(Data.loadedPeople[name], function(j, el) {
+            el.remove();
+          });
+
+          delete Colors.usedColors[name];
+          delete Data.loadedPeople[name];
         });
 
-        delete Colors.usedColors[name];
-        delete Data.loadedPeople[name];
-      });
+        UI.drawSelectedPeople();
+      }
 
-      UI.drawSelectedPeople();
     },
 
     getRandomPointInPolygon: function(bbox, boundariesPx, dataSetName) {

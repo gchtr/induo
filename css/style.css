@@ -109,7 +109,7 @@ strong {
 
 .category-info {
 	height: 160px;
-	padding-top: 40px;
+	padding-top: 60px;
 }
 
 .category-info p {
@@ -136,7 +136,7 @@ strong {
 	font-size: 18px;
 	float: none;
 	color: #f9f9f9;
-	margin-left: 1em;
+	margin-left: 0.4em;
 }
 
 /******************************
@@ -145,7 +145,6 @@ strong {
 
 .ui-left {
 	left: 0;
-
 }
 
 /*
@@ -261,6 +260,19 @@ label, .category-title {
 	cursor: pointer;
 }
 
+.pseudo-checkbox,
+.selected-color-swatch,
+.selected-location-icon {
+	display: inline-block;
+	line-height: 12px;
+	width: 11px;
+	height: 11px;
+	opacity: 1;
+	border: 1px solid #bbb;
+	margin-right: 6px;
+	border-radius: 22px;
+}
+
 input[type="checkbox"] {
 	visibility: hidden;
 	width: 0;
@@ -271,20 +283,19 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	opacity: 0.8;
 }
 
-.locations input[type="checkbox"]:checked ~ div.pseudo-checkbox {
+.locations input[type="checkbox"]:checked ~ div.pseudo-checkbox,
+.selected-location-icon {
    background-color: #f9f9f9;
    border: 2px solid #111;
 }
 
-.pseudo-checkbox, .selected-color-swatch {
-	display: inline-block;
-	line-height: 12px;
-	width: 11px;
-	height: 11px;
-	opacity: 1;
-	border: 1px solid #bbb;
-	margin-right: 6px;
-	border-radius: 22px;
+.hover .selected-location-icon,
+.locations .hover input[type="checkbox"]:checked ~ div.pseudo-checkbox {
+	background-color: #111;
+}
+
+.selected-location:hover {
+	cursor: auto;
 }
 
 .location-name {
@@ -306,11 +317,12 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 
 /******************************
  *
- *	Selected People
+ *	Selected People & Locations
  *
  ******************************/
 
-.selected-people-box {
+.selected-people-box,
+.selected-locations-box {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -320,7 +332,7 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	text-align: center;
 }
 
-.selected-color {
+.selected-color, .selected-location {
 	display: inline-block;
 	margin-right: 2em;
 }
@@ -329,8 +341,12 @@ input[type="checkbox"]:checked ~ div.pseudo-checkbox {
 	border: none;
 }
 
-.selected-color-name {
+.selected-color-name, .selected-location-name {
 	display: inline-block;
+}
+
+.selected-locations-box {
+	margin-top: 90px;
 }
 
 
