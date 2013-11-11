@@ -887,7 +887,7 @@ var app = (function() {
       var textName = content['Name'] !== 'undefined' || content['Name'] != '' ? content['Name'] : 'keine Angabe',
           textAddress = content['Adresse'] !== 'undefined' || content['Adresse'] != '' ? content['Adresse'] : '&nbsp;';
 
-      var textContent = encodeURIComponent(textName + "\n" + textAddress);
+      var textContent = textName + "\n" + textAddress;
 
       var text = Visualization.mapPaper.text(position.x + textXOffset, position.y + textYOffset, textContent);
       text.attr({
@@ -1015,6 +1015,7 @@ var app = (function() {
 
       delete Colors.usedColors[name];
       delete Data.loadedPeople[name];
+      delete Data.peopleOnMap[name];
 
       UI.drawSelectedPeople();
     },
@@ -1031,6 +1032,7 @@ var app = (function() {
 
           delete Colors.usedColors[name];
           delete Data.loadedPeople[name];
+          delete Data.peopleOnMap[name];
         });
 
         UI.drawSelectedPeople();
