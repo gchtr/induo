@@ -24,12 +24,6 @@
  *  - jQuery
  *  - Raphaël.js
  *
- *
- *  Yes, we are students and the code that you find
- *  here might not be the best, as we’re still learning.
- *  Also, deadlines make you do things that you normally wouldn‘t.
- *  We’re sure that it probably could be optimised tremendously.
- *
  *  If you’d like to contribute or give us some hints on improvements,
  *  we’d be very happy to hear from you:
  *  - see twitter handles above

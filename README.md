@@ -34,8 +34,6 @@ built with:
 * jQuery
 * [Raphael.js](http://www.raphaeljs.com)
 
-Yes, we are students and the code that you find here is surely not be the best, as we’re still beginners in JavaScript. Also, deadlines make you do things that you normally wouldn’t. We’re sure that it probably could be optimised tremendously.
-
 If you’d like to contribute or give us some hints on improvements, create an issue or say hello on Twitter. We’d be very happy to hear from you.
 
 ## Todo
