@@ -3,6 +3,10 @@
 
 [Interactive Data Visualization](http://alma.zhdk.ch/interactive_visualization/) project with [Open Data from the city of Zurich](http://data.stadt-zuerich.ch)
 
+## Prototype
+
+[Live Demo](http://alma.zhdk.ch/interactive_visualization/IV13_Induo/index.html)
+
 ## Project description
 
 Induo, which is latin for «attracting» just wants to be a possibility to visualize data of the city of Zurich. In a series of hacknights, organised by the city of Zurich and members of the Swiss Open Data Association the task was to find out the best location for your undertaking or intention.
@@ -27,14 +31,12 @@ Students from the 3rd semester of the [Interaction Design Course](http://iad.zhd
 
 <http://www.behance.net/gallery/Induo-zieht-Zuerich-an/12065759>
 
-## Prototype
-
-built with:
+## Built With
 
 * jQuery
 * [Raphael.js](http://www.raphaeljs.com)
 
-If you’d like to contribute or give us some hints on improvements, create an issue or say hello on Twitter. We’d be very happy to hear from you.
+If you’d like to contribute or give us some hints on improvements, do a pull request, open an issue or say hello on Twitter. We’d be very happy to hear from you.
 
 ## Todo
 
